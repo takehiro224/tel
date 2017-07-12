@@ -1,0 +1,429 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F935C3B21F15BC2C0034F948 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F935C3B11F15BC2C0034F948 /* AppDelegate.swift */; };
+		F935C3B41F15BC2C0034F948 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F935C3B31F15BC2C0034F948 /* ViewController.swift */; };
+		F935C3B71F15BC2C0034F948 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F935C3B51F15BC2C0034F948 /* Main.storyboard */; };
+		F935C3B91F15BC2C0034F948 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F935C3B81F15BC2C0034F948 /* Assets.xcassets */; };
+		F935C3BC1F15BC2C0034F948 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F935C3BA1F15BC2C0034F948 /* LaunchScreen.storyboard */; };
+		F935C3C71F15BC2D0034F948 /* ssctel_firebaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F935C3C61F15BC2D0034F948 /* ssctel_firebaseTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F935C3C31F15BC2D0034F948 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F935C3A61F15BC2C0034F948 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F935C3AD1F15BC2C0034F948;
+			remoteInfo = "ssctel-firebase";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F935C3AE1F15BC2C0034F948 /* ssctel-firebase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ssctel-firebase.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F935C3B11F15BC2C0034F948 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F935C3B31F15BC2C0034F948 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F935C3B61F15BC2C0034F948 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F935C3B81F15BC2C0034F948 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F935C3BB1F15BC2C0034F948 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F935C3BD1F15BC2C0034F948 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F935C3C21F15BC2D0034F948 /* ssctel-firebaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ssctel-firebaseTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F935C3C61F15BC2D0034F948 /* ssctel_firebaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ssctel_firebaseTests.swift; sourceTree = "<group>"; };
+		F935C3C81F15BC2D0034F948 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F935C3AB1F15BC2C0034F948 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F935C3BF1F15BC2D0034F948 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F935C3A51F15BC2C0034F948 = {
+			isa = PBXGroup;
+			children = (
+				F935C3B01F15BC2C0034F948 /* ssctel-firebase */,
+				F935C3C51F15BC2D0034F948 /* ssctel-firebaseTests */,
+				F935C3AF1F15BC2C0034F948 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F935C3AF1F15BC2C0034F948 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F935C3AE1F15BC2C0034F948 /* ssctel-firebase.app */,
+				F935C3C21F15BC2D0034F948 /* ssctel-firebaseTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F935C3B01F15BC2C0034F948 /* ssctel-firebase */ = {
+			isa = PBXGroup;
+			children = (
+				F935C3B11F15BC2C0034F948 /* AppDelegate.swift */,
+				F935C3B31F15BC2C0034F948 /* ViewController.swift */,
+				F935C3B51F15BC2C0034F948 /* Main.storyboard */,
+				F935C3B81F15BC2C0034F948 /* Assets.xcassets */,
+				F935C3BA1F15BC2C0034F948 /* LaunchScreen.storyboard */,
+				F935C3BD1F15BC2C0034F948 /* Info.plist */,
+			);
+			path = "ssctel-firebase";
+			sourceTree = "<group>";
+		};
+		F935C3C51F15BC2D0034F948 /* ssctel-firebaseTests */ = {
+			isa = PBXGroup;
+			children = (
+				F935C3C61F15BC2D0034F948 /* ssctel_firebaseTests.swift */,
+				F935C3C81F15BC2D0034F948 /* Info.plist */,
+			);
+			path = "ssctel-firebaseTests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F935C3AD1F15BC2C0034F948 /* ssctel-firebase */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F935C3CB1F15BC2D0034F948 /* Build configuration list for PBXNativeTarget "ssctel-firebase" */;
+			buildPhases = (
+				F935C3AA1F15BC2C0034F948 /* Sources */,
+				F935C3AB1F15BC2C0034F948 /* Frameworks */,
+				F935C3AC1F15BC2C0034F948 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ssctel-firebase";
+			productName = "ssctel-firebase";
+			productReference = F935C3AE1F15BC2C0034F948 /* ssctel-firebase.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F935C3C11F15BC2D0034F948 /* ssctel-firebaseTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F935C3CE1F15BC2D0034F948 /* Build configuration list for PBXNativeTarget "ssctel-firebaseTests" */;
+			buildPhases = (
+				F935C3BE1F15BC2D0034F948 /* Sources */,
+				F935C3BF1F15BC2D0034F948 /* Frameworks */,
+				F935C3C01F15BC2D0034F948 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F935C3C41F15BC2D0034F948 /* PBXTargetDependency */,
+			);
+			name = "ssctel-firebaseTests";
+			productName = "ssctel-firebaseTests";
+			productReference = F935C3C21F15BC2D0034F948 /* ssctel-firebaseTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F935C3A61F15BC2C0034F948 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = tkwatanabe;
+				TargetAttributes = {
+					F935C3AD1F15BC2C0034F948 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 38HYQS5SV4;
+						ProvisioningStyle = Automatic;
+					};
+					F935C3C11F15BC2D0034F948 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 38HYQS5SV4;
+						ProvisioningStyle = Automatic;
+						TestTargetID = F935C3AD1F15BC2C0034F948;
+					};
+				};
+			};
+			buildConfigurationList = F935C3A91F15BC2C0034F948 /* Build configuration list for PBXProject "ssctel-firebase" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F935C3A51F15BC2C0034F948;
+			productRefGroup = F935C3AF1F15BC2C0034F948 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F935C3AD1F15BC2C0034F948 /* ssctel-firebase */,
+				F935C3C11F15BC2D0034F948 /* ssctel-firebaseTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F935C3AC1F15BC2C0034F948 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F935C3BC1F15BC2C0034F948 /* LaunchScreen.storyboard in Resources */,
+				F935C3B91F15BC2C0034F948 /* Assets.xcassets in Resources */,
+				F935C3B71F15BC2C0034F948 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F935C3C01F15BC2D0034F948 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F935C3AA1F15BC2C0034F948 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F935C3B41F15BC2C0034F948 /* ViewController.swift in Sources */,
+				F935C3B21F15BC2C0034F948 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F935C3BE1F15BC2D0034F948 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F935C3C71F15BC2D0034F948 /* ssctel_firebaseTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F935C3C41F15BC2D0034F948 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F935C3AD1F15BC2C0034F948 /* ssctel-firebase */;
+			targetProxy = F935C3C31F15BC2D0034F948 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F935C3B51F15BC2C0034F948 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F935C3B61F15BC2C0034F948 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F935C3BA1F15BC2C0034F948 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F935C3BB1F15BC2C0034F948 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F935C3C91F15BC2D0034F948 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		F935C3CA1F15BC2D0034F948 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F935C3CC1F15BC2D0034F948 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 38HYQS5SV4;
+				INFOPLIST_FILE = "ssctel-firebase/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.shinwart.ssctel-firebase";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		F935C3CD1F15BC2D0034F948 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 38HYQS5SV4;
+				INFOPLIST_FILE = "ssctel-firebase/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.shinwart.ssctel-firebase";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		F935C3CF1F15BC2D0034F948 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 38HYQS5SV4;
+				INFOPLIST_FILE = "ssctel-firebaseTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.shinwart.ssctel-firebaseTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ssctel-firebase.app/ssctel-firebase";
+			};
+			name = Debug;
+		};
+		F935C3D01F15BC2D0034F948 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 38HYQS5SV4;
+				INFOPLIST_FILE = "ssctel-firebaseTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.shinwart.ssctel-firebaseTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ssctel-firebase.app/ssctel-firebase";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F935C3A91F15BC2C0034F948 /* Build configuration list for PBXProject "ssctel-firebase" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F935C3C91F15BC2D0034F948 /* Debug */,
+				F935C3CA1F15BC2D0034F948 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F935C3CB1F15BC2D0034F948 /* Build configuration list for PBXNativeTarget "ssctel-firebase" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F935C3CC1F15BC2D0034F948 /* Debug */,
+				F935C3CD1F15BC2D0034F948 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		F935C3CE1F15BC2D0034F948 /* Build configuration list for PBXNativeTarget "ssctel-firebaseTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F935C3CF1F15BC2D0034F948 /* Debug */,
+				F935C3D01F15BC2D0034F948 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F935C3A61F15BC2C0034F948 /* Project object */;
+}
