@@ -18,8 +18,8 @@ class MemberRegistViewController: UIViewController {
 
     var nameTextField: UITextField? = nil
 
-    var member: Member? = nil
-    var memberName: String? = nil
+    //処理対象メンバー
+    var memberInfo: (member: Member, indexPathRow: Int)!
 
     var updateFlag = false
 
@@ -30,18 +30,17 @@ class MemberRegistViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        //値を取得していれば更新、そうでなければ新規
-        guard let mem = self.member else {
-            saveButton.title = "登録"
+        if let mem = DataManager.sharedInstance.memberInfo {
+            //更新
+            //更新フラグ
+            updateFlag = true
+            saveButton.title = "更新"
+            self.memberInfo = mem
             return
+        } else {
+            //新規
+            saveButton.title = "登録"
         }
-
-        //タップしたセルのメンバー情報を辞書型に成型
-        memberName = mem.name
-
-        //更新フラグ
-        updateFlag = true
-        saveButton.title = "更新"
 
     }
 
@@ -68,7 +67,6 @@ class MemberRegistViewController: UIViewController {
         } else {
             create()
         }
-        navigationController?.popViewController(animated: true)
     }
 
     private func create() {
@@ -76,16 +74,20 @@ class MemberRegistViewController: UIViewController {
         self.ref.child((Auth.auth().currentUser?.uid)!)
             .childByAutoId()
             .setValue(["user": (Auth.auth().currentUser?.uid)!,"name": nameTextField!.text!, "date": ServerValue.timestamp()])
+                navigationController?.popViewController(animated: true)
     }
 
     private func update() {
         ref.child((Auth.auth().currentUser?.uid)!)
-            .child("\(self.member!.key)")
+            .child("\(self.memberInfo.member.key)")
             .updateChildValues([
                 "user": (Auth.auth().currentUser?.uid)!,
                 "name": nameTextField!.text!,
                 "date": ServerValue.timestamp()
                 ])
+        memberInfo.member.name = (self.nameTextField?.text)!
+        DataManager.sharedInstance.updateMemberData(memberInfo)
+        navigationController?.popViewController(animated: true)
     }
 
     // MARK: - Navigation
@@ -109,7 +111,7 @@ extension MemberRegistViewController: UITableViewDataSource {
         cell.nameTextField.delegate = self
         cell.selectionStyle = .none
 
-        cell.nameTextField.text = memberName
+        cell.nameTextField.text = memberInfo.member.name
         return cell
     }
 }

@@ -96,12 +96,8 @@ class MemberListViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PushMemberDetail" {
             //一般
-            guard let detailViewController = segue.destination as? MemberDetailViewController else { return }
-            detailViewController.member = self.member
         } else {
             //新規登録
-            guard let registViewController = segue.destination as? MemberRegistViewController else { return }
-            registViewController.member = self.member
         }
     }
 }
@@ -130,7 +126,8 @@ extension MemberListViewController: UITableViewDelegate {
 
     //セルタップ処理
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        member = DataManager.sharedInstance.members[indexPath.row]
+//        member = DataManager.sharedInstance.members[indexPath.row]
+        DataManager.sharedInstance.choiceMember(indexPath)
         //テーブルの選択状態を解除
         tableView.deselectRow(at: indexPath, animated: true)
         self.performSegue(withIdentifier: "PushMemberDetail", sender: self)

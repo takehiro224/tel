@@ -18,7 +18,8 @@ class MemberDetailViewController: UIViewController {
     @IBOutlet weak var callButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
 
-    var member: Member!
+    //処理対象メンバー
+    var memberInfo: (member: Member, indexPathRow: Int)!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +28,12 @@ class MemberDetailViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        name.text = member.name
-        if member.phoneNumber == nil {
+        guard let mem = DataManager.sharedInstance.memberInfo else {
+            return
+        }
+        self.memberInfo = mem
+        name.text = memberInfo.member.name
+        if memberInfo.member.phoneNumber == nil {
             callButton.isEnabled = false
             callButton.backgroundColor = UIColor.lightGray
         }
@@ -53,7 +58,7 @@ class MemberDetailViewController: UIViewController {
     }
 
     @IBAction func callButtonTapped(_ sender: UIButton) {
-        guard let tel = member.phoneNumber else {
+        guard let tel = memberInfo.member.phoneNumber else {
             return
         }
         let url = NSURL(string: "tel://\(tel)")!
@@ -76,11 +81,9 @@ class MemberDetailViewController: UIViewController {
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "PushToEdit" {
-            guard let registViewController = segue.destination as? MemberRegistViewController else { return }
-            registViewController.member = self.member
-        }
     }
+    
+    @IBAction func goBack(_ segue:UIStoryboardSegue) {}
 
 }
 

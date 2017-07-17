@@ -65,6 +65,9 @@ struct Group {
 
 //MARK: - 内部用データ作成
 class DataManager {
+    
+    //処理対象メンバー
+    var memberInfo: (member: Member, indexPathRow: Int)?
 
     //全メンバー情報
     var members: [Member] = []
@@ -93,6 +96,15 @@ class DataManager {
                 )
             )
         }
+    }
+    
+    public func choiceMember(_ indexPath: IndexPath) {
+        self.memberInfo = (members[indexPath.row], indexPath.row)
+    }
+    
+    public func updateMemberData(_ memberInfo: (Member, Int)) {
+        self.memberInfo = memberInfo
+        self.members[memberInfo.1] = memberInfo.0
     }
 }
 
