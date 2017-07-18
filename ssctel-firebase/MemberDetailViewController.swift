@@ -82,8 +82,6 @@ class MemberDetailViewController: UIViewController {
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     }
-    
-    @IBAction func goBack(_ segue:UIStoryboardSegue) {}
 
 }
 

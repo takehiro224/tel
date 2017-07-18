@@ -69,7 +69,7 @@ class MemberListViewController: UIViewController {
         if snap.exists() {
             DataManager.sharedInstance.load(snapshots: snap)
             //ローカルのDBにも反映
-            ref.child((Auth.auth().currentUser?.uid)!).keepSynced(true)
+            //ref.child((Auth.auth().currentUser?.uid)!).keepSynced(true)
             //テーブルのリロード
             self.tableView.reloadData()
         }
@@ -117,6 +117,7 @@ extension MemberListViewController: UITableViewDataSource {
         let member = DataManager.sharedInstance.members[indexPath.row]
         //名前を取り出す
         cell.name.text = member.name
+        cell.status.text = member.status
         return cell
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 import Firebase
 
-enum GroupInfo: Int {
+enum GroupName: Int {
     case bs = 0
     case sd = 1
     case logi = 2
@@ -17,11 +17,11 @@ enum GroupInfo: Int {
     var name: String {
         switch self {
         case .bs:
-            return ""
+            return "B.P.S"
         case .sd:
-            return ""
+            return "SD"
         case .logi:
-            return ""
+            return "SI東日本ロジスティクス"
         }
     }
 }
@@ -29,10 +29,16 @@ enum GroupInfo: Int {
 //MARK: - 従業員データ
 struct Member {
 
+    //uid
     var key: String
+    //名前
     var name: String
+    //電話番号
     var phoneNumber: String?
-//    var group: Int
+    //ステータス
+    var status: String
+    //グループ名
+    var group: Int
 
 //    var id: Int
 //    var password: String
@@ -47,12 +53,18 @@ struct Member {
 //    var sheetPhoneNumber: String
 //    var shortMailAddress: String
 //    var emailAddress: String
-//    var status: String
 
-    init(key: String, name: String, phoneNumber tel: String?) {
+    //イニシャライザ
+    init(key: String,
+         name: String,
+         phoneNumber tel: String?,
+         status: String,
+         group: Int) {
         self.key = key
         self.name = name
         self.phoneNumber = tel
+        self.status = status
+        self.group = group
     }
 
 }
@@ -66,17 +78,24 @@ struct Group {
 //MARK: - 内部用データ作成
 class DataManager {
     
+    //Databaseのルート
+    let ref = Database.database().reference()
+    
     //処理対象メンバー
     var memberInfo: (member: Member, indexPathRow: Int)?
 
     //全メンバー情報
     var members: [Member] = []
+    
+    //グループ情報
+    var groupNames: [String: String] = [:]
 
+    //シングルトン
     static let sharedInstance = DataManager()
-
     private init() {}
-
-    //全グループ情報
+    
+    public func loadGroup(snapshots: DataSnapshot) {
+    }
 
     //読み込み
     public func load(snapshots: DataSnapshot) {
@@ -86,13 +105,17 @@ class DataManager {
         for member in snapshots.children {
             //取得したデータをDataSnapshot型に格納
             let dataSnapshot = member as! DataSnapshot
+            print(dataSnapshot.key)
+            print(dataSnapshot.value)
             //DataSnapshotから辞書型データに変換
             let data = dataSnapshot.value as! [String: AnyObject]
             members.append(
                 Member(
                     key: String(describing: dataSnapshot.key),
                     name: String(describing: data["name"]!),
-                    phoneNumber: data["phoneNumber"] != nil ? String(describing: data["phoneNumber"]!) : nil
+                    phoneNumber: data["phoneNumber"] != nil ? String(describing: data["phoneNumber"]!) : nil,
+                    status: String(describing: data["status"]),
+                    group: 1
                 )
             )
         }
@@ -110,7 +133,6 @@ class DataManager {
 
 enum UserAttribute {
     //    var group: Int
-
     //    var id: Int
     //    var password: String
     //    var lastName: String

@@ -73,8 +73,14 @@ class MemberRegistViewController: UIViewController {
         //新規登録
         self.ref.child((Auth.auth().currentUser?.uid)!)
             .childByAutoId()
-            .setValue(["user": (Auth.auth().currentUser?.uid)!,"name": nameTextField!.text!, "date": ServerValue.timestamp()])
-                navigationController?.popViewController(animated: true)
+            .setValue([
+                "user": (Auth.auth().currentUser?.uid)!,
+                "name": nameTextField!.text!,
+                "phoneNumber" : "08046622240",
+                "status" : "Normal",
+                "date": ServerValue.timestamp()
+                ])
+        navigationController?.popViewController(animated: true)
     }
 
     private func update() {
@@ -83,6 +89,8 @@ class MemberRegistViewController: UIViewController {
             .updateChildValues([
                 "user": (Auth.auth().currentUser?.uid)!,
                 "name": nameTextField!.text!,
+                "phoneNumber" : "08046622240",
+                "status" : "Normal",
                 "date": ServerValue.timestamp()
                 ])
         memberInfo.member.name = (self.nameTextField?.text)!
