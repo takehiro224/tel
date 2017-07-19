@@ -53,6 +53,10 @@ class MemberListViewController: UIViewController {
         performSegue(withIdentifier: "toRegister", sender: self)
     }
 
+    //部署選択ボタン処理
+    @IBAction func selectGroupButtonTapped(_ sender: UIBarButtonItem) {
+        DataManager.sharedInstance.selectGroupMembers(group: "1")
+    }
     //Firebase Databaseからデータを読み込む
     private func read() {
         //eventTypeを「.value」にすることで何かしらの変化があった時に実行される
@@ -120,7 +124,7 @@ extension MemberListViewController: UITableViewDataSource {
         cell.name.text = member.name
         cell.status.text = member.status
         cell.company.text = member.company
-        cell.group.text = member.group
+        cell.group.text = member.group?.1
         return cell
     }
 }

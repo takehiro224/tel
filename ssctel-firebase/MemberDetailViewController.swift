@@ -39,7 +39,7 @@ class MemberDetailViewController: UIViewController {
         //カナ設定
         kana.text = memberInfo.member.kana
         //電話番号設定
-        if memberInfo.member.internalPhoneNumber == nil {
+        if memberInfo.member.internalPhoneNumber == nil || memberInfo.member.internalPhoneNumber!.characters.count < 1 {
             callButton.isEnabled = false
             callButton.backgroundColor = UIColor.lightGray
         }
@@ -111,7 +111,7 @@ extension MemberDetailViewController: UITableViewDataSource {
             cell.itemValue.text = self.memberInfo.0.company
         case .group:
             cell.itemName.text = MemberAttributes.group.rawValue
-            cell.itemValue.text = self.memberInfo.0.group
+            cell.itemValue.text = self.memberInfo.0.group?.1
         case .internalPhoneNumber:
             cell.itemName.text = MemberAttributes.internalPhoneNumber.rawValue
             cell.itemValue.text = self.memberInfo.0.internalPhoneNumber

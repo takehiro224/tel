@@ -22,6 +22,7 @@ class MemberRegistViewController: UIViewController {
     //処理対象メンバー
     var memberInfo: (member: Member, indexPathRow: Int)!
 
+    //更新フラグ
     var updateFlag = false
 
     override func viewDidLoad() {
@@ -76,8 +77,8 @@ class MemberRegistViewController: UIViewController {
         }
     }
 
+    //新規登録処理
     private func create() {
-        //新規登録
         let params = QueryCondition.queryParams(textFieldsData: self.textFields)
         self.ref.child((Auth.auth().currentUser?.uid)!)
             .childByAutoId()
@@ -85,6 +86,7 @@ class MemberRegistViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
 
+    //更新処理
     private func update() {
         let params = QueryCondition.queryParams(textFieldsData: self.textFields)
         ref.child((Auth.auth().currentUser?.uid)!)
@@ -134,7 +136,7 @@ extension MemberRegistViewController: UITableViewDataSource {
             case .company:
                 cell.inputTextField.text = memberInfo.member.company
             case .group:
-                cell.inputTextField.text = memberInfo.member.group
+                cell.inputTextField.text = memberInfo.member.group?.1
             case .internalPhoneNumber:
                 cell.inputTextField.text = memberInfo.member.internalPhoneNumber
             case .externalPhoneNumber:

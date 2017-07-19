@@ -58,7 +58,7 @@ struct Member {
     //カンパニー名
     var company: String? = nil
     //グループ名
-    var group: String? = nil
+    var group: (String, String)? = nil
     //携帯内線
     var internalPhoneNumber: String? = nil
     //外線
@@ -120,7 +120,7 @@ struct Member {
         }
         //グループ名
         if let groupObject = group, let groupName = DataManager.sharedInstance.groupNames["\(groupObject)"] {
-            self.group = groupName
+            self.group = ("\(groupObject)", groupName)
         }
         //電話番号
         if let iTelObject = iTel, let itel = iTelObject as? String { self.internalPhoneNumber = itel }
@@ -149,6 +149,9 @@ class DataManager {
 
     //全メンバー情報
     var members: [Member] = []
+    
+    //部署メンバー
+    var selectedMembers: [Member] = []
 
     //カンパニー情報
     var companyNames: [String: String] = [:]
@@ -173,6 +176,7 @@ class DataManager {
                         self.groupNames[group.key] = name
                     }
                 }
+                print(DataManager.sharedInstance.groupNames)
             })
     }
 
@@ -189,6 +193,7 @@ class DataManager {
                         self.companyNames[group.key] = name
                     }
                 }
+                print(DataManager.sharedInstance.companyNames)
             })
     }
 
@@ -231,6 +236,14 @@ class DataManager {
     public func updateMemberData(_ memberInfo: (Member, Int)) {
         self.memberInfo = memberInfo
         self.members[memberInfo.1] = memberInfo.0
+    }
+    
+    public func selectGroupMembers(group: String) {
+        self.selectedMembers.removeAll()
+        self.selectedMembers = self.members.filter{ $0.group?.0 == group }
+        for mem in self.selectedMembers {
+            print(mem.name)
+        }
     }
 }
 
