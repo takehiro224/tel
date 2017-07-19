@@ -22,8 +22,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Firebase設定
         FirebaseApp.configure()
         //ローカルDB作成
-        Database.database().isPersistenceEnabled = true
+        //Database.database().isPersistenceEnabled = true
 
+        DataManager.sharedInstance.loadCompanyData()
+        DataManager.sharedInstance.loadGroupData()
         return true
     }
 

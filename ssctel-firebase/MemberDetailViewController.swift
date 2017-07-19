@@ -13,10 +13,11 @@ class MemberDetailViewController: UIViewController {
 
     @IBOutlet weak var mainContainer: UIView!
     @IBOutlet weak var photo: UIImageView!
-    @IBOutlet weak var name: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var callButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var kana: UILabel!
+    @IBOutlet weak var name: UILabel!
 
     //処理対象メンバー
     var memberInfo: (member: Member, indexPathRow: Int)!
@@ -28,15 +29,24 @@ class MemberDetailViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        //一覧から選択されたデータを取得する
         guard let mem = DataManager.sharedInstance.memberInfo else {
             return
         }
         self.memberInfo = mem
+        //名前設定
         name.text = memberInfo.member.name
-        if memberInfo.member.phoneNumber == nil {
+        //カナ設定
+        kana.text = memberInfo.member.kana
+        //電話番号設定
+        if memberInfo.member.internalPhoneNumber == nil {
             callButton.isEnabled = false
             callButton.backgroundColor = UIColor.lightGray
         }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
     }
 
     override func didReceiveMemoryWarning() {
@@ -58,7 +68,7 @@ class MemberDetailViewController: UIViewController {
     }
 
     @IBAction func callButtonTapped(_ sender: UIButton) {
-        guard let tel = memberInfo.member.phoneNumber else {
+        guard let tel = memberInfo.member.internalPhoneNumber else {
             return
         }
         let url = NSURL(string: "tel://\(tel)")!
@@ -89,11 +99,39 @@ class MemberDetailViewController: UIViewController {
 extension MemberDetailViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return attributes.count - 2 //氏名、カナを省く為
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MemberDetailItem") as! MemberDetailTableViewCell
+        let attribute = attributes[indexPath.row + 2] //氏名、カナを省く為
+        switch attribute {
+        case .company:
+            cell.itemName.text = MemberAttributes.company.rawValue
+            cell.itemValue.text = self.memberInfo.0.company
+        case .group:
+            cell.itemName.text = MemberAttributes.group.rawValue
+            cell.itemValue.text = self.memberInfo.0.group
+        case .internalPhoneNumber:
+            cell.itemName.text = MemberAttributes.internalPhoneNumber.rawValue
+            cell.itemValue.text = self.memberInfo.0.internalPhoneNumber
+        case .externalPhoneNumber:
+            cell.itemName.text = MemberAttributes.externalPhoneNumber.rawValue
+            cell.itemValue.text = self.memberInfo.0.externalPhoneNumber
+        case .sheetPhoneNumber:
+            cell.itemName.text = MemberAttributes.sheetPhoneNumber.rawValue
+            cell.itemValue.text = self.memberInfo.0.sheetPhoneNumber
+        case .shortMailAddress:
+            cell.itemName.text = MemberAttributes.shortMailAddress.rawValue
+            cell.itemValue.text = self.memberInfo.0.shortMailAddress
+        case .emailAddress:
+            cell.itemName.text = MemberAttributes.emailAddress.rawValue
+            cell.itemValue.text = self.memberInfo.0.emailAddress
+        default:
+            break
+        }
+
+        return cell
     }
 
 }

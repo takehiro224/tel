@@ -14,10 +14,12 @@ class MemberListTableViewCell: UITableViewCell {
     @IBOutlet weak var photo: UIImageView!
     @IBOutlet weak var status: UILabel!
     @IBOutlet weak var infoContainer: UIView!
+    @IBOutlet weak var company: UILabel!
     @IBOutlet weak var group: UILabel!
 
     @IBOutlet weak var nameX: NSLayoutConstraint!
     @IBOutlet weak var infoContainerX: NSLayoutConstraint!
+    @IBOutlet weak var groupX: NSLayoutConstraint!
 
     override func awakeFromNib() {
         super.awakeFromNib()

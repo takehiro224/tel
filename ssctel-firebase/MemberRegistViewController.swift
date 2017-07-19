@@ -16,7 +16,8 @@ class MemberRegistViewController: UIViewController {
 
     let ref = Database.database().reference()
 
-    var nameTextField: UITextField? = nil
+    var inputTextField: UITextField? = nil
+    var textFields: [String: UITextField] = [:]
 
     //処理対象メンバー
     var memberInfo: (member: Member, indexPathRow: Int)!
@@ -44,6 +45,10 @@ class MemberRegistViewController: UIViewController {
 
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -58,7 +63,9 @@ class MemberRegistViewController: UIViewController {
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
 
         //早期離脱
-        guard let name = nameTextField?.text else { return }
+        guard let nameTextField =  textFields[MemberAttributes.name.key], let name = nameTextField.text else {
+            return
+        }
         if name.characters.count < 1 { return }
 
         //登録or更新処理
@@ -71,32 +78,24 @@ class MemberRegistViewController: UIViewController {
 
     private func create() {
         //新規登録
+        let params = QueryCondition.queryParams(textFieldsData: self.textFields)
         self.ref.child((Auth.auth().currentUser?.uid)!)
             .childByAutoId()
-            .setValue([
-                "user": (Auth.auth().currentUser?.uid)!,
-                "name": nameTextField!.text!,
-                "phoneNumber" : "08046622240",
-                "status" : "Normal",
-                "date": ServerValue.timestamp()
-                ])
+            .setValue(params)
         navigationController?.popViewController(animated: true)
     }
 
     private func update() {
+        let params = QueryCondition.queryParams(textFieldsData: self.textFields)
         ref.child((Auth.auth().currentUser?.uid)!)
             .child("\(self.memberInfo.member.key)")
-            .updateChildValues([
-                "user": (Auth.auth().currentUser?.uid)!,
-                "name": nameTextField!.text!,
-                "phoneNumber" : "08046622240",
-                "status" : "Normal",
-                "date": ServerValue.timestamp()
-                ])
-        memberInfo.member.name = (self.nameTextField?.text)!
+            .updateChildValues(params)
+        memberInfo.member.name = self.textFields[MemberAttributes.name.key]?.text ?? "no name"
         DataManager.sharedInstance.updateMemberData(memberInfo)
         navigationController?.popViewController(animated: true)
     }
+
+    
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -108,18 +107,49 @@ class MemberRegistViewController: UIViewController {
 extension MemberRegistViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return attributes.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
         guard let cell = self.tableView.dequeueReusableCell(withIdentifier: "PersonalData") as? MemberRegistTableViewCell else {
             return UITableViewCell()
         }
-        self.nameTextField = cell.nameTextField
-        cell.nameTextField.delegate = self
-        cell.selectionStyle = .none
+        let atb = attributes[indexPath.row]
+        var textField = UITextField()
+        textField = cell.inputTextField
+        self.textFields[atb.key] = textField
 
-        cell.nameTextField.text = memberInfo.member.name
+        cell.inputTextField.delegate = self
+        cell.selectionStyle = .none
+        cell.inputTextField.placeholder = atb.rawValue
+
+        //更新の場合
+        if updateFlag {
+            switch atb {
+            case .name:
+                cell.inputTextField.text = memberInfo.member.name
+            case .kana:
+                cell.inputTextField.text = memberInfo.member.kana
+            case .company:
+                cell.inputTextField.text = memberInfo.member.company
+            case .group:
+                cell.inputTextField.text = memberInfo.member.group
+            case .internalPhoneNumber:
+                cell.inputTextField.text = memberInfo.member.internalPhoneNumber
+            case .externalPhoneNumber:
+                cell.inputTextField.text = memberInfo.member.externalPhoneNumber
+            case .sheetPhoneNumber:
+                cell.inputTextField.text = memberInfo.member.sheetPhoneNumber
+            case .shortMailAddress:
+                cell.inputTextField.text = memberInfo.member.shortMailAddress
+            case .emailAddress:
+                cell.inputTextField.text = memberInfo.member.emailAddress
+            }
+        } else {
+            cell.inputTextField.text = nil
+        }
+
         return cell
     }
 }
@@ -138,6 +168,7 @@ extension MemberRegistViewController: UITextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        print(textField.text ?? "no data")
         return true
     }
 }

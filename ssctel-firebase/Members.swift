@@ -9,22 +9,42 @@
 import Foundation
 import Firebase
 
-enum GroupName: Int {
-    case bs = 0
-    case sd = 1
-    case logi = 2
+public enum MemberAttributes: String {
+    case name = "氏名"
+    case kana = "フリカナ"
+    case company = "事業部"
+    case group = "部署"
+    case internalPhoneNumber = "携帯内線番号"
+    case externalPhoneNumber = "外線番号"
+    case sheetPhoneNumber = "座席内線番号"
+    case shortMailAddress = "SMS"
+    case emailAddress = "Mail"
 
-    var name: String {
+    var key: String {
         switch self {
-        case .bs:
-            return "B.P.S"
-        case .sd:
-            return "SD"
-        case .logi:
-            return "SI東日本ロジスティクス"
+        case .name:
+            return "name"
+        case .kana:
+            return "kana"
+        case .company:
+            return "company"
+        case .group:
+            return "group"
+        case .internalPhoneNumber:
+            return "internalPhoneNumber"
+        case .externalPhoneNumber:
+            return "externalPhoneNumber"
+        case .sheetPhoneNumber:
+            return "sheetPhoneNumber"
+        case .shortMailAddress:
+            return "shortMailAddress"
+        case .emailAddress:
+            return "emailAddress"
         }
     }
 }
+
+public let attributes: [MemberAttributes] = [.name, .kana, .company, .group, .internalPhoneNumber, .externalPhoneNumber, .sheetPhoneNumber, .shortMailAddress, .emailAddress]
 
 //MARK: - 従業員データ
 struct Member {
@@ -33,51 +53,94 @@ struct Member {
     var key: String
     //名前
     var name: String
-    //電話番号
-    var phoneNumber: String?
+    //kana
+    var kana: String? = nil
+    //カンパニー名
+    var company: String? = nil
+    //グループ名
+    var group: String? = nil
+    //携帯内線
+    var internalPhoneNumber: String? = nil
+    //外線
+    var externalPhoneNumber: String? = nil
+    //座席内線
+    var sheetPhoneNumber: String? = nil
+    //SMS
+    var shortMailAddress: String? = nil
+    //e-Mail
+    var emailAddress: String? = nil
     //ステータス
     var status: String
-    //グループ名
-    var group: Int
 
-//    var id: Int
-//    var password: String
-//    var lastName: String
-//    var firstName: String
-//    var lastNameKana: String
-//    var firstNameKana: String
-//    var group1: String
-//    var group2: String
-//    var internalPhoneNumber: String
-//    var externalPhoneNumber: String
-//    var sheetPhoneNumber: String
-//    var shortMailAddress: String
-//    var emailAddress: String
+    /**
+     イニシャライザ
 
-    //イニシャライザ
-    init(key: String,
-         name: String,
-         phoneNumber tel: String?,
-         status: String,
-         group: Int) {
+    - Parameters:
+        - key: uid
+        - name: 名前
+        - kana: フリカナ
+        - company: カンパニー
+        - group: グループ
+        - internalPhoneNumber: 電話番号
+        - externalPhoneNumber: 外線
+        - sheetPhoneNumber: 座席内線
+        - shortMailAddress: sms
+        - emailAddress: email
+        - status: ステータス
+     - throws: なし
+    */
+    init?(
+        key: String,
+        name: AnyObject?,
+        kana: AnyObject?,
+        company: AnyObject?,
+        group: AnyObject?,
+        internalPhoneNumber iTel: AnyObject?,
+        externalPhoneNumber eTel: AnyObject?,
+        sheetPhoneNumber sTel: AnyObject?,
+        shortMailAddress sMail: AnyObject?,
+        emailAddress eMail: AnyObject?,
+        status: AnyObject?
+        ) {
+        //uid
         self.key = key
+        //氏名
+        guard let nameObject = name else { return nil }
+        guard let name = nameObject as? String else {
+            return nil
+        }
         self.name = name
-        self.phoneNumber = tel
-        self.status = status
-        self.group = group
+        //フリカナ
+        if let kanaObject = kana, let kana = kanaObject as? String {
+            self.kana = kana
+        }
+        //カンパニー名
+        if let companyObject = company, let companyName = DataManager.sharedInstance.companyNames["\(companyObject)"] {
+            self.company = companyName
+        }
+        //グループ名
+        if let groupObject = group, let groupName = DataManager.sharedInstance.groupNames["\(groupObject)"] {
+            self.group = groupName
+        }
+        //電話番号
+        if let iTelObject = iTel, let itel = iTelObject as? String { self.internalPhoneNumber = itel }
+        //外線
+        if let eTelObject = eTel, let etel = eTelObject as? String { self.externalPhoneNumber = etel }
+        //座席内線
+        if let sTelObject = sTel, let stel = sTelObject as? String { self.sheetPhoneNumber = stel }
+        //SMS
+        if let sMailObject = sMail, let smail = sMailObject as? String { self.shortMailAddress = smail }
+        //E-Mail
+        if let eMailObject = eMail, let email = eMailObject as? String { self.emailAddress = email }
+        //ステータス
+        if let statusObject = status, let status = statusObject as? String { self.status = status } else { self.status = "no status"}
     }
 
 }
 
-//MARK: - 所属グループデータ
-struct Group {
-    var name: String
-    var members: [Member]
-}
-
 //MARK: - 内部用データ作成
 class DataManager {
-    
+
     //Databaseのルート
     let ref = Database.database().reference()
     
@@ -86,15 +149,47 @@ class DataManager {
 
     //全メンバー情報
     var members: [Member] = []
-    
+
+    //カンパニー情報
+    var companyNames: [String: String] = [:]
+
     //グループ情報
     var groupNames: [String: String] = [:]
 
     //シングルトン
     static let sharedInstance = DataManager()
     private init() {}
-    
-    public func loadGroup(snapshots: DataSnapshot) {
+
+    //グループ情報読み込み処理
+    public func loadGroupData() {
+        //クリア
+        self.groupNames.removeAll()
+        ref.child("group_info")
+            .observe(.value, with: { snapShots in
+                var groups = snapShots.value as! [String: AnyObject]
+                groups.removeValue(forKey: "user")
+                for group in groups {
+                    if let name = group.value as? String {
+                        self.groupNames[group.key] = name
+                    }
+                }
+            })
+    }
+
+    //カンパニー情報読み込み処理
+    public func loadCompanyData() {
+        //クリア
+        self.companyNames.removeAll()
+        ref.child("company_info")
+            .observe(.value, with: { snapShots in
+                var groups = snapShots.value as! [String: AnyObject]
+                groups.removeValue(forKey: "user")
+                for group in groups {
+                    if let name = group.value as? String {
+                        self.companyNames[group.key] = name
+                    }
+                }
+            })
     }
 
     //読み込み
@@ -102,22 +197,30 @@ class DataManager {
         //クリア
         self.members.removeAll()
         //変換処理
-        for member in snapshots.children {
+        for memberData in snapshots.children {
             //取得したデータをDataSnapshot型に格納
-            let dataSnapshot = member as! DataSnapshot
-            print(dataSnapshot.key)
-            print(dataSnapshot.value)
+            let dataSnapshot = memberData as! DataSnapshot
             //DataSnapshotから辞書型データに変換
-            let data = dataSnapshot.value as! [String: AnyObject]
-            members.append(
-                Member(
-                    key: String(describing: dataSnapshot.key),
-                    name: String(describing: data["name"]!),
-                    phoneNumber: data["phoneNumber"] != nil ? String(describing: data["phoneNumber"]!) : nil,
-                    status: String(describing: data["status"]),
-                    group: 1
-                )
-            )
+            guard let data = dataSnapshot.value as? [String: AnyObject] else {
+                //Firebaseデータを辞書型に変換できない場合はエラーとし、離脱
+                return
+            }
+            guard let member = Member(
+                key: dataSnapshot.key,
+                name: data["name"],
+                kana: data["kana"],
+                company: data["company"],
+                group: data["group"],
+                internalPhoneNumber: data["internalPhoneNumber"],
+                externalPhoneNumber: data["externalPhoneNumber"],
+                sheetPhoneNumber: data["sheetPhoneNumber"],
+                shortMailAddress: data["shortMailAddress"],
+                emailAddress: data["emailAddress"],
+                status: data["status"])
+                else {
+                    return
+            }
+            members.append(member)
         }
     }
     
@@ -131,23 +234,3 @@ class DataManager {
     }
 }
 
-enum UserAttribute {
-    //    var group: Int
-    //    var id: Int
-    //    var password: String
-    //    var lastName: String
-    //    var firstName: String
-    //    var lastNameKana: String
-    //    var firstNameKana: String
-    //    var group1: String
-    //    var group2: String
-    //    var internalPhoneNumber: String
-    //    var externalPhoneNumber: String
-    //    var sheetPhoneNumber: String
-    //    var shortMailAddress: String
-    //    var emailAddress: String
-    //    var status: String
-    case id
-    case key
-    case name
-}

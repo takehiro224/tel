@@ -31,6 +31,7 @@ class MemberListViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        DataManager.sharedInstance.memberInfo = nil
         //Cellの高さを調節
 //        tableView.estimatedRowHeight = 120
 //        tableView.rowHeight = UITableViewAutomaticDimension
@@ -118,6 +119,8 @@ extension MemberListViewController: UITableViewDataSource {
         //名前を取り出す
         cell.name.text = member.name
         cell.status.text = member.status
+        cell.company.text = member.company
+        cell.group.text = member.group
         return cell
     }
 }
@@ -127,7 +130,6 @@ extension MemberListViewController: UITableViewDelegate {
 
     //セルタップ処理
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        member = DataManager.sharedInstance.members[indexPath.row]
         DataManager.sharedInstance.choiceMember(indexPath)
         //テーブルの選択状態を解除
         tableView.deselectRow(at: indexPath, animated: true)
