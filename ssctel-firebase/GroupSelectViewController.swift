@@ -69,6 +69,13 @@ class GroupSelectViewController: UIViewController {
         //選択された事業部に所属するメンバーを取得する
         var selectedCompanyMember: [String: Member]
         //選択された部署に所属するメンバーを取得する
+        let companyMember = DataManager.sharedInstance.members.filter {selectedCompanykey.contains($0.company!)}
+        let groupMember = DataManager.sharedInstance.members.filter { selectedGroupKey.contains($0.group!.0)}
+        print(selectedCompanykey)
+        print(selectedGroupKey)
+        print(DataManager.sharedInstance.members)
+        print(companyMember)
+        print(groupMember)
     }
 }
 
