@@ -150,14 +150,42 @@ class DataManager {
     //全メンバー情報
     var members: [Member] = []
     
-    //部署メンバー
+    //絞り込み選択されたメンバー
     var selectedMembers: [Member] = []
 
     //カンパニー情報
-    var companyNames: [String: String] = [:]
+    var companyNames: [String: String] = [:] {
+        didSet {
+            companyKeys.removeAll()
+            companyValues.removeAll()
+            companyKeys = [String](self.companyNames.keys)
+            companyValues = [String](self.companyNames.values)
+            companyInfo.removeAll()
+            for i in 0 ..< companyNames.count {
+                companyInfo.append((key: companyKeys[i], value: companyValues[i], check: "No"))
+            }
+        }
+    }
+    var companyKeys: [String] = []
+    var companyValues: [String] = []
+    var companyInfo: [(key: String, value: String, check: String)] = []
 
     //グループ情報
-    var groupNames: [String: String] = [:]
+    var groupNames: [String: String] = [:] {
+        didSet {
+            groupKeys.removeAll()
+            groupValues.removeAll()
+            groupKeys = [String](self.groupNames.keys)
+            groupValues = [String](self.groupNames.values)
+            groupInfo.removeAll()
+            for i in 0 ..< groupNames.count {
+                groupInfo.append((key: groupKeys[i], value: groupValues[i], check: "No"))
+            }
+        }
+    }
+    var groupKeys: [String] = []
+    var groupValues: [String] = []
+    var groupInfo: [(key: String, value: String, check: String)] = []
 
     //シングルトン
     static let sharedInstance = DataManager()
@@ -176,7 +204,6 @@ class DataManager {
                         self.groupNames[group.key] = name
                     }
                 }
-                print(DataManager.sharedInstance.groupNames)
             })
     }
 
@@ -193,7 +220,6 @@ class DataManager {
                         self.companyNames[group.key] = name
                     }
                 }
-                print(DataManager.sharedInstance.companyNames)
             })
     }
 

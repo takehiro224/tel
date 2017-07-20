@@ -7,13 +7,14 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--部署選択-->
         <scene sceneID="qnZ-81-HLM">
             <objects>
-                <viewController id="kj4-LH-o5C" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GroupSelectViewController" automaticallyAdjustsScrollViewInsets="NO" id="kj4-LH-o5C" customClass="GroupSelectViewController" customModule="ssctel_firebase" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mp7-LO-CS3"/>
                         <viewControllerLayoutGuide type="bottom" id="npO-lN-7KM"/>
@@ -21,12 +22,73 @@
                     <view key="view" contentMode="scaleToFill" id="v6d-dY-s6Q">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="EsV-0p-Oa4">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GroupSelectItemCell" textLabel="jmj-zd-Y0A" style="IBUITableViewCellStyleDefault" id="LnV-iT-aVN" customClass="GroupSelectItemTableViewCell" customModule="ssctel_firebase" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LnV-iT-aVN" id="f2l-FB-h2s">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jmj-zd-Y0A">
+                                                    <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="groupNameLabel" destination="jmj-zd-Y0A" id="c8F-lG-B2B"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="kj4-LH-o5C" id="H0A-at-pUd"/>
+                                    <outlet property="delegate" destination="kj4-LH-o5C" id="pU8-Bo-lKf"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="npO-lN-7KM" firstAttribute="top" secondItem="EsV-0p-Oa4" secondAttribute="bottom" id="GfT-vp-4ys"/>
+                            <constraint firstAttribute="trailing" secondItem="EsV-0p-Oa4" secondAttribute="trailing" id="JGV-O9-Cra"/>
+                            <constraint firstItem="EsV-0p-Oa4" firstAttribute="top" secondItem="mp7-LO-CS3" secondAttribute="bottom" id="JGa-DC-fyD"/>
+                            <constraint firstItem="EsV-0p-Oa4" firstAttribute="leading" secondItem="v6d-dY-s6Q" secondAttribute="leading" id="hQJ-TF-eSl"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="部署選択" id="rA9-gb-EnI">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="UFG-DT-Jgd">
+                            <connections>
+                                <action selector="cancelButtonTapped:" destination="kj4-LH-o5C" id="SK3-U2-2iZ"/>
+                            </connections>
+                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="done" id="aQ0-ck-6pS">
+                                <connections>
+                                    <action selector="doneButtonTapped:" destination="kj4-LH-o5C" id="3TL-uw-1jU"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="全選択" id="jGt-WQ-Cfp">
+                                <connections>
+                                    <action selector="allSelectButtonTapped:" destination="kj4-LH-o5C" id="QiI-y0-rTy"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="allSelectButton" destination="jGt-WQ-Cfp" id="1YQ-BW-hNr"/>
+                        <outlet property="tableView" destination="EsV-0p-Oa4" id="3qq-35-uMv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kat-eB-YsR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1420" y="-716"/>
+            <point key="canvasLocation" x="1420" y="-708"/>
         </scene>
         <!--連絡先-->
         <scene sceneID="tne-QT-ifu">
@@ -55,7 +117,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="neY-Ua-pX7" id="YJ0-oF-PuY">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jlt-0U-f3W">
@@ -175,6 +237,7 @@
                         <outlet property="tableView" destination="Hvw-sB-4Ga" id="Jzd-hX-u3O"/>
                         <segue destination="6YO-YH-ir8" kind="show" identifier="toRegister" id="gJ6-eY-zPf"/>
                         <segue destination="bs2-Lh-Dj4" kind="show" identifier="PushMemberDetail" id="Djb-fi-gCQ"/>
+                        <segue destination="kj4-LH-o5C" kind="show" identifier="PushGroupSelect" id="TJl-5k-jbg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -203,18 +266,46 @@
                                             <constraint firstAttribute="height" constant="70" id="k48-wm-Qxf"/>
                                         </constraints>
                                     </imageView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vrk-Va-PZv">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="vrk-Va-PZv">
                                         <rect key="frame" x="10" y="90" width="355" height="70"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ibs-1W-vAw">
-                                                <rect key="frame" x="0.0" y="0.0" width="355" height="70"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="67" height="70"/>
                                                 <color key="backgroundColor" red="0.44149103760000002" green="0.63658559319999997" blue="0.76869714259999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <state key="normal" title="Call">
+                                                <state key="normal" title="内線">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="callButtonTapped:" destination="bs2-Lh-Dj4" eventType="touchUpInside" id="JxX-Gi-maS"/>
                                                 </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VYa-1N-LVB">
+                                                <rect key="frame" x="72" y="0.0" width="67" height="70"/>
+                                                <color key="backgroundColor" red="0.88502311706542969" green="0.46140667796134949" blue="0.69025534391403198" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <state key="normal" title="外線">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y3y-N0-gJt">
+                                                <rect key="frame" x="144" y="0.0" width="67" height="70"/>
+                                                <color key="backgroundColor" red="0.44149103760000002" green="0.63658559319999997" blue="0.76869714259999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <state key="normal" title="座席内線">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KCt-71-Vxc">
+                                                <rect key="frame" x="216" y="0.0" width="67" height="70"/>
+                                                <color key="backgroundColor" red="0.88502311710000003" green="0.46140667800000001" blue="0.69025534389999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <state key="normal" title="SMS">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rni-hT-FR9">
+                                                <rect key="frame" x="288" y="0.0" width="67" height="70"/>
+                                                <color key="backgroundColor" red="0.44149103760000002" green="0.63658559319999997" blue="0.76869714259999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <state key="normal" title="e-Mail">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -276,7 +367,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="K6K-Y5-mn0" id="xR1-wV-Q2C">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="key" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mgx-cn-wdd">
@@ -382,7 +473,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gF8-RV-MZb" id="c03-eN-nSy">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="54.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="氏名" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CDp-jB-Hyq">
@@ -573,7 +664,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kDv-2P-NQh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="492" y="698"/>
+            <point key="canvasLocation" x="479" y="1191"/>
         </scene>
         <!--設定-->
         <scene sceneID="RRk-YU-DBF">
@@ -601,10 +692,10 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nZy-Hu-tOM" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="A8u-rh-x9H" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1433" y="699"/>
+            <point key="canvasLocation" x="1420" y="1192"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="gJ6-eY-zPf"/>
+        <segue reference="Ng6-4q-Jba"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -56,6 +56,7 @@ class MemberListViewController: UIViewController {
     //部署選択ボタン処理
     @IBAction func selectGroupButtonTapped(_ sender: UIBarButtonItem) {
         DataManager.sharedInstance.selectGroupMembers(group: "1")
+        performSegue(withIdentifier: "PushGroupSelect", sender: self)
     }
     //Firebase Databaseからデータを読み込む
     private func read() {
