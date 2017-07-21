@@ -17,39 +17,39 @@ public struct QueryCondition {
         //user
         params["user"] = (Auth.auth().currentUser?.uid)!
         //氏名
-        if let name = textFieldsData[MemberAttributes.name.key]?.text {
+        if let name = textFieldsData[MemberAttributes.name.rawValue]?.text {
             params["name"] = name
         }
         //フリカナ
-        if let kana = textFieldsData[MemberAttributes.kana.key]?.text {
+        if let kana = textFieldsData[MemberAttributes.kana.rawValue]?.text {
             params["kana"] = kana
         }
         //事業部
-        if let company = textFieldsData[MemberAttributes.company.key]?.text {
+        if let company = textFieldsData[MemberAttributes.company.rawValue]?.text {
             params["company"] = company
         }
         //部署
-        if let group = textFieldsData[MemberAttributes.group.key]?.text {
+        if let group = textFieldsData[MemberAttributes.group.rawValue]?.text {
             params["group"] = group
         }
         //携帯内線番号
-        if let internalPhoneNumber = textFieldsData[MemberAttributes.internalPhoneNumber.key]?.text {
+        if let internalPhoneNumber = textFieldsData[MemberAttributes.internalPhoneNumber.rawValue]?.text {
             params["internalPhoneNumber"] = internalPhoneNumber
         }
         //外線番号
-        if let externalPhoneNumber = textFieldsData[MemberAttributes.externalPhoneNumber.key]?.text {
+        if let externalPhoneNumber = textFieldsData[MemberAttributes.externalPhoneNumber.rawValue]?.text {
             params["externalPhoneNumber"] = externalPhoneNumber
         }
         //座席内線番号
-        if let sheetPhoneNumber = textFieldsData[MemberAttributes.sheetPhoneNumber.key]?.text {
+        if let sheetPhoneNumber = textFieldsData[MemberAttributes.sheetPhoneNumber.rawValue]?.text {
             params["sheetPhoneNumber"] = sheetPhoneNumber
         }
         //SMS
-        if let shortMailAddress = textFieldsData[MemberAttributes.shortMailAddress.key]?.text {
+        if let shortMailAddress = textFieldsData[MemberAttributes.shortMailAddress.rawValue]?.text {
             params["shortMailAddress"] = shortMailAddress
         }
         //E-Mail
-        if let emailAddress = textFieldsData[MemberAttributes.emailAddress.key]?.text {
+        if let emailAddress = textFieldsData[MemberAttributes.emailAddress.rawValue]?.text {
             params["emailAddress"] = emailAddress
         }
         params["date"] = ServerValue.timestamp()

@@ -15,6 +15,11 @@ class MemberDetailViewController: UIViewController {
     @IBOutlet weak var photo: UIImageView!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var callButton: UIButton!
+    @IBOutlet weak var call2Button: UIButton!
+    @IBOutlet weak var call3Button: UIButton!
+    @IBOutlet weak var smsButton: UIButton!
+    @IBOutlet weak var emailButton: UIButton!
+
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var kana: UILabel!
     @IBOutlet weak var name: UILabel!
@@ -87,6 +92,10 @@ class MemberDetailViewController: UIViewController {
         name.layer.cornerRadius = 5
         favoriteButton.layer.cornerRadius = 5
         callButton.layer.cornerRadius = 5
+        call2Button.layer.cornerRadius = 5
+        call3Button.layer.cornerRadius = 5
+        smsButton.layer.cornerRadius = 5
+        emailButton.layer.cornerRadius = 5
     }
 
     // MARK: - Navigation
@@ -107,25 +116,25 @@ extension MemberDetailViewController: UITableViewDataSource {
         let attribute = attributes[indexPath.row + 2] //氏名、カナを省く為
         switch attribute {
         case .company:
-            cell.itemName.text = MemberAttributes.company.rawValue
-            cell.itemValue.text = self.memberInfo.0.company
+            cell.itemName.text = MemberAttributes.company.itemName
+            cell.itemValue.text = self.memberInfo.0.company?.name
         case .group:
-            cell.itemName.text = MemberAttributes.group.rawValue
-            cell.itemValue.text = self.memberInfo.0.group?.1
+            cell.itemName.text = MemberAttributes.group.itemName
+            cell.itemValue.text = self.memberInfo.0.group?.name
         case .internalPhoneNumber:
-            cell.itemName.text = MemberAttributes.internalPhoneNumber.rawValue
+            cell.itemName.text = MemberAttributes.internalPhoneNumber.itemName
             cell.itemValue.text = self.memberInfo.0.internalPhoneNumber
         case .externalPhoneNumber:
-            cell.itemName.text = MemberAttributes.externalPhoneNumber.rawValue
+            cell.itemName.text = MemberAttributes.externalPhoneNumber.itemName
             cell.itemValue.text = self.memberInfo.0.externalPhoneNumber
         case .sheetPhoneNumber:
-            cell.itemName.text = MemberAttributes.sheetPhoneNumber.rawValue
+            cell.itemName.text = MemberAttributes.sheetPhoneNumber.itemName
             cell.itemValue.text = self.memberInfo.0.sheetPhoneNumber
         case .shortMailAddress:
-            cell.itemName.text = MemberAttributes.shortMailAddress.rawValue
+            cell.itemName.text = MemberAttributes.shortMailAddress.itemName
             cell.itemValue.text = self.memberInfo.0.shortMailAddress
         case .emailAddress:
-            cell.itemName.text = MemberAttributes.emailAddress.rawValue
+            cell.itemName.text = MemberAttributes.emailAddress.itemName
             cell.itemValue.text = self.memberInfo.0.emailAddress
         default:
             break

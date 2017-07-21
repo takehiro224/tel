@@ -37,6 +37,7 @@ class GroupSelectViewController: UIViewController {
         allSelectFlag = false
         navigationController?.popViewController(animated: true)
     }
+
     //全選択ボタンタップ処理
     @IBAction func allSelectButtonTapped(_ sender: UIBarButtonItem) {
         if allSelectFlag {
@@ -60,22 +61,11 @@ class GroupSelectViewController: UIViewController {
         }
         tableView.reloadData()
     }
+
     //完了ボタンタップ処理
     @IBAction func doneButtonTapped(_ sender: UIBarButtonItem) {
-        //選択されている事業部のkeyを取得する
-        let selectedCompanykey = DataManager.sharedInstance.companyInfo.filter { $0.check == "Yes" }.map { $0.key }
-        //選択されている部署のkeyを取得する
-        let selectedGroupKey = DataManager.sharedInstance.groupInfo.filter { $0.check == "Yes" }.map { $0.key }
-        //選択された事業部に所属するメンバーを取得する
-        var selectedCompanyMember: [String: Member]
-        //選択された部署に所属するメンバーを取得する
-        let companyMember = DataManager.sharedInstance.members.filter {selectedCompanykey.contains($0.company!)}
-        let groupMember = DataManager.sharedInstance.members.filter { selectedGroupKey.contains($0.group!.0)}
-        print(selectedCompanykey)
-        print(selectedGroupKey)
-        print(DataManager.sharedInstance.members)
-        print(companyMember)
-        print(groupMember)
+        DataManager.sharedInstance.selectGroupMembers()
+        navigationController?.popViewController(animated: true)
     }
 }
 

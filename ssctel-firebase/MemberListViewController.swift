@@ -32,9 +32,7 @@ class MemberListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         DataManager.sharedInstance.memberInfo = nil
-        //Cellの高さを調節
-//        tableView.estimatedRowHeight = 120
-//        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.reloadData()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -55,7 +53,6 @@ class MemberListViewController: UIViewController {
 
     //部署選択ボタン処理
     @IBAction func selectGroupButtonTapped(_ sender: UIBarButtonItem) {
-//        DataManager.sharedInstance.selectGroupMembers(group: "1")
         performSegue(withIdentifier: "PushGroupSelect", sender: self)
     }
     //Firebase Databaseからデータを読み込む
@@ -89,13 +86,13 @@ class MemberListViewController: UIViewController {
         return formatter.string(from: date)
     }
 
+    //FireBase, 内部データからの削除
     fileprivate func delete(deleteIndexPath indexPath: IndexPath) {
         //Firebaseデータ削除処理
         ref.child((Auth.auth().currentUser?.uid)!)
-            .child(DataManager.sharedInstance.members[indexPath.row].key)
+            .child(DataManager.sharedInstance.selectedMembers[indexPath.row].key!)
             .removeValue()
         //内部データ削除処理
-        DataManager.sharedInstance.members.remove(at: indexPath.row)
     }
 
     //MARK: - Navigation
@@ -112,7 +109,7 @@ class MemberListViewController: UIViewController {
 extension MemberListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return DataManager.sharedInstance.members.count
+        return DataManager.sharedInstance.selectedMembers.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -120,12 +117,12 @@ extension MemberListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         //セルに表示するメンバーを取り出す
-        let member = DataManager.sharedInstance.members[indexPath.row]
+        let member = DataManager.sharedInstance.selectedMembers[indexPath.row]
         //名前を取り出す
         cell.name.text = member.name
         cell.status.text = member.status
-        cell.company.text = member.company
-        cell.group.text = member.group?.1
+        cell.company.text = member.company?.name
+        cell.group.text = member.group?.name
         return cell
     }
 }
@@ -150,7 +147,6 @@ extension MemberListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             self.delete(deleteIndexPath: indexPath)
-            self.tableView.deleteRows(at: [indexPath as IndexPath], with: .fade)
         }
     }
 }

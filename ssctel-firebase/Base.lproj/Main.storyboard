@@ -432,12 +432,16 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="call2Button" destination="VYa-1N-LVB" id="lHG-XV-0UU"/>
+                        <outlet property="call3Button" destination="Y3y-N0-gJt" id="scS-O3-IET"/>
                         <outlet property="callButton" destination="ibs-1W-vAw" id="5Im-7a-Qv1"/>
+                        <outlet property="emailButton" destination="Rni-hT-FR9" id="jJN-lA-Nnr"/>
                         <outlet property="favoriteButton" destination="JC6-mJ-hWZ" id="wqm-Ki-s3d"/>
                         <outlet property="kana" destination="v3N-tK-FAj" id="rbq-D8-ake"/>
                         <outlet property="mainContainer" destination="dab-D3-oYw" id="uZR-12-ifF"/>
                         <outlet property="name" destination="D8P-D3-hjB" id="3WM-b5-c4d"/>
                         <outlet property="photo" destination="gEm-UE-ugj" id="dtw-HE-qNf"/>
+                        <outlet property="smsButton" destination="KCt-71-Vxc" id="dG4-cW-zkB"/>
                         <outlet property="tableView" destination="y89-sV-twI" id="LQq-Db-JSC"/>
                         <segue destination="6YO-YH-ir8" kind="show" identifier="PushToEdit" id="Ng6-4q-Jba"/>
                     </connections>

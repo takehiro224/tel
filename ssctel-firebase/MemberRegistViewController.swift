@@ -64,7 +64,7 @@ class MemberRegistViewController: UIViewController {
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
 
         //早期離脱
-        guard let nameTextField =  textFields[MemberAttributes.name.key], let name = nameTextField.text else {
+        guard let nameTextField =  textFields[MemberAttributes.name.rawValue], let name = nameTextField.text else {
             return
         }
         if name.characters.count < 1 { return }
@@ -90,9 +90,9 @@ class MemberRegistViewController: UIViewController {
     private func update() {
         let params = QueryCondition.queryParams(textFieldsData: self.textFields)
         ref.child((Auth.auth().currentUser?.uid)!)
-            .child("\(self.memberInfo.member.key)")
+            .child("\(self.memberInfo.member.key!)")
             .updateChildValues(params)
-        memberInfo.member.name = self.textFields[MemberAttributes.name.key]?.text ?? "no name"
+        memberInfo.member.name = self.textFields[MemberAttributes.name.rawValue]?.text ?? "no name"
         DataManager.sharedInstance.updateMemberData(memberInfo)
         navigationController?.popViewController(animated: true)
     }
@@ -120,11 +120,11 @@ extension MemberRegistViewController: UITableViewDataSource {
         let atb = attributes[indexPath.row]
         var textField = UITextField()
         textField = cell.inputTextField
-        self.textFields[atb.key] = textField
+        self.textFields[atb.rawValue] = textField
 
         cell.inputTextField.delegate = self
         cell.selectionStyle = .none
-        cell.inputTextField.placeholder = atb.rawValue
+        cell.inputTextField.placeholder = atb.itemName
 
         //更新の場合
         if updateFlag {
@@ -134,9 +134,9 @@ extension MemberRegistViewController: UITableViewDataSource {
             case .kana:
                 cell.inputTextField.text = memberInfo.member.kana
             case .company:
-                cell.inputTextField.text = memberInfo.member.company
+                cell.inputTextField.text = memberInfo.member.company?.name
             case .group:
-                cell.inputTextField.text = memberInfo.member.group?.1
+                cell.inputTextField.text = memberInfo.member.group?.name
             case .internalPhoneNumber:
                 cell.inputTextField.text = memberInfo.member.internalPhoneNumber
             case .externalPhoneNumber:

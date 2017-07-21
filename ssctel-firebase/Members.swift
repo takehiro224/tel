@@ -10,36 +10,36 @@ import Foundation
 import Firebase
 
 public enum MemberAttributes: String {
-    case name = "氏名"
-    case kana = "フリカナ"
-    case company = "事業部"
-    case group = "部署"
-    case internalPhoneNumber = "携帯内線番号"
-    case externalPhoneNumber = "外線番号"
-    case sheetPhoneNumber = "座席内線番号"
-    case shortMailAddress = "SMS"
-    case emailAddress = "Mail"
+    case name
+    case kana
+    case company
+    case group
+    case internalPhoneNumber
+    case externalPhoneNumber
+    case sheetPhoneNumber
+    case shortMailAddress
+    case emailAddress
 
-    var key: String {
+    var itemName: String {
         switch self {
         case .name:
-            return "name"
+            return "氏名"
         case .kana:
-            return "kana"
+            return "フリカナ"
         case .company:
-            return "company"
+            return "事業部"
         case .group:
-            return "group"
+            return "部署"
         case .internalPhoneNumber:
-            return "internalPhoneNumber"
+            return "携帯内線"
         case .externalPhoneNumber:
-            return "externalPhoneNumber"
+            return "外線"
         case .sheetPhoneNumber:
-            return "sheetPhoneNumber"
+            return "座席内線"
         case .shortMailAddress:
-            return "shortMailAddress"
+            return "SMS"
         case .emailAddress:
-            return "emailAddress"
+            return "Mail"
         }
     }
 }
@@ -47,18 +47,18 @@ public enum MemberAttributes: String {
 public let attributes: [MemberAttributes] = [.name, .kana, .company, .group, .internalPhoneNumber, .externalPhoneNumber, .sheetPhoneNumber, .shortMailAddress, .emailAddress]
 
 //MARK: - 従業員データ
-struct Member {
+public struct Member: CustomStringConvertible {
 
     //uid
-    var key: String
+    var key: String? = nil
     //名前
-    var name: String
+    var name: String? = nil
     //kana
     var kana: String? = nil
     //カンパニー名
-    var company: String? = nil
+    var company: (code: String, name: String)? = nil
     //グループ名
-    var group: (String, String)? = nil
+    var group: (code: String, name: String)? = nil
     //携帯内線
     var internalPhoneNumber: String? = nil
     //外線
@@ -70,70 +70,25 @@ struct Member {
     //e-Mail
     var emailAddress: String? = nil
     //ステータス
-    var status: String
+    var status: String? = nil
 
-    /**
-     イニシャライザ
+    // MARK: - CustomStringConvertible
+    public var description: String {
+        get {
+            var string = "\nkey: \(key ?? "No Data")"
+            string += "name: \(name ?? "No Data")\n"
+            string += "kana: \(kana ?? "No Data")\n"
+            string += "company: \(company?.name ?? "No Data")\n"
+            string += "group: \(group?.name ?? "No Data")\n"
+            string += "internalPhoneNumber: \(internalPhoneNumber ?? "No Data")\n"
+            string += "externalPhoneNumber: \(externalPhoneNumber ?? "No Data")\n"
+            string += "sheetPhoneNumber: \(sheetPhoneNumber ?? "No Data")\n"
+            string += "shortMailAddress: \(shortMailAddress ?? "No Data")\n"
+            string += "emailAddress: \(emailAddress ?? "No Data")\n"
+            string += "status: \(status ?? "No Data")\n"
 
-    - Parameters:
-        - key: uid
-        - name: 名前
-        - kana: フリカナ
-        - company: カンパニー
-        - group: グループ
-        - internalPhoneNumber: 電話番号
-        - externalPhoneNumber: 外線
-        - sheetPhoneNumber: 座席内線
-        - shortMailAddress: sms
-        - emailAddress: email
-        - status: ステータス
-     - throws: なし
-    */
-    init?(
-        key: String,
-        name: AnyObject?,
-        kana: AnyObject?,
-        company: AnyObject?,
-        group: AnyObject?,
-        internalPhoneNumber iTel: AnyObject?,
-        externalPhoneNumber eTel: AnyObject?,
-        sheetPhoneNumber sTel: AnyObject?,
-        shortMailAddress sMail: AnyObject?,
-        emailAddress eMail: AnyObject?,
-        status: AnyObject?
-        ) {
-        //uid
-        self.key = key
-        //氏名
-        guard let nameObject = name else { return nil }
-        guard let name = nameObject as? String else {
-            return nil
+            return string
         }
-        self.name = name
-        //フリカナ
-        if let kanaObject = kana, let kana = kanaObject as? String {
-            self.kana = kana
-        }
-        //カンパニー名
-        if let companyObject = company, let companyName = DataManager.sharedInstance.companyNames["\(companyObject)"] {
-            self.company = companyName
-        }
-        //グループ名
-        if let groupObject = group, let groupName = DataManager.sharedInstance.groupNames["\(groupObject)"] {
-            self.group = ("\(groupObject)", groupName)
-        }
-        //電話番号
-        if let iTelObject = iTel, let itel = iTelObject as? String { self.internalPhoneNumber = itel }
-        //外線
-        if let eTelObject = eTel, let etel = eTelObject as? String { self.externalPhoneNumber = etel }
-        //座席内線
-        if let sTelObject = sTel, let stel = sTelObject as? String { self.sheetPhoneNumber = stel }
-        //SMS
-        if let sMailObject = sMail, let smail = sMailObject as? String { self.shortMailAddress = smail }
-        //E-Mail
-        if let eMailObject = eMail, let email = eMailObject as? String { self.emailAddress = email }
-        //ステータス
-        if let statusObject = status, let status = statusObject as? String { self.status = status } else { self.status = "no status"}
     }
 
 }
@@ -153,7 +108,7 @@ class DataManager {
     //絞り込み選択されたメンバー
     var selectedMembers: [Member] = []
 
-    //カンパニー情報
+    //事業部情報
     var companyNames: [String: String] = [:] {
         didSet {
             companyKeys.removeAll()
@@ -170,7 +125,7 @@ class DataManager {
     var companyValues: [String] = []
     var companyInfo: [(key: String, value: String, check: String)] = []
 
-    //グループ情報
+    //部署情報
     var groupNames: [String: String] = [:] {
         didSet {
             groupKeys.removeAll()
@@ -223,52 +178,92 @@ class DataManager {
             })
     }
 
-    //読み込み
+    // 読み込み
     public func load(snapshots: DataSnapshot) {
-        //クリア
+        // クリア
         self.members.removeAll()
-        //変換処理
+        // 変換処理
         for memberData in snapshots.children {
-            //取得したデータをDataSnapshot型に格納
-            let dataSnapshot = memberData as! DataSnapshot
-            //DataSnapshotから辞書型データに変換
+            // 取得したデータをDataSnapshot型に格納
+            guard let dataSnapshot = memberData as? DataSnapshot else {
+                continue
+            }
+            // DataSnapshotから辞書型データに変換
             guard let data = dataSnapshot.value as? [String: AnyObject] else {
-                //Firebaseデータを辞書型に変換できない場合はエラーとし、離脱
-                return
+                // Firebaseデータを辞書型に変換できない場合はエラーとし、離脱
+                continue
             }
-            guard let member = Member(
-                key: dataSnapshot.key,
-                name: data["name"],
-                kana: data["kana"],
-                company: data["company"],
-                group: data["group"],
-                internalPhoneNumber: data["internalPhoneNumber"],
-                externalPhoneNumber: data["externalPhoneNumber"],
-                sheetPhoneNumber: data["sheetPhoneNumber"],
-                shortMailAddress: data["shortMailAddress"],
-                emailAddress: data["emailAddress"],
-                status: data["status"])
-                else {
-                    return
+            // 取得したデータをMemberオブジェクトに変換
+            var member = Member()
+            // uid
+            member.key = dataSnapshot.key
+            // 名前
+            if let name = data["name"] as? String { member.name = name }
+            // フリカナ
+            if let kana = data["kana"] as? String { member.kana = kana }
+            // 事業部(codeを取得し、codeと事業部名を登録する)
+            if let companyCode = data["company"] as? String, let companyName = DataManager.sharedInstance.companyNames[companyCode] {
+                member.company = (code: companyCode, name: companyName)
             }
+            // 部署(codeを取得し、codeと部署名を登録する)
+            if let groupCode = data["group"] as? String, let groupName = DataManager.sharedInstance.groupNames[groupCode] {
+                member.group = (code: groupCode, name: groupName)
+            }
+            // 携帯内線
+            if let tel1 = data["internalPhoneNumber"] as? String { member.internalPhoneNumber = tel1 }
+            // 外線
+            if let tel2 = data["externalPhoneNumber"] as? String { member.externalPhoneNumber = tel2 }
+            // 座席内線
+            if let tel3 = data["sheetPhoneNumber"] as? String { member.sheetPhoneNumber = tel3 }
+            // SMS
+            if let sms = data["shortMailAddress"] as? String { member.shortMailAddress = sms }
+            // e-Mail
+            if let email = data["emailAddress"] as? String { member.emailAddress = email }
+            // ステータス
+            if let status = data["status"] as? String { member.status = status }
+
             members.append(member)
         }
+        members = members.sorted { $0.kana! < $1.kana! }
+        selectedMembers = members
     }
-    
+
+    //メンバーを選択
     public func choiceMember(_ indexPath: IndexPath) {
-        self.memberInfo = (members[indexPath.row], indexPath.row)
+        self.memberInfo = (selectedMembers[indexPath.row], indexPath.row)
     }
-    
+
+    //メンバー情報を更新
     public func updateMemberData(_ memberInfo: (Member, Int)) {
         self.memberInfo = memberInfo
-        self.members[memberInfo.1] = memberInfo.0
+        self.selectedMembers[memberInfo.1] = memberInfo.0
     }
-    
-    public func selectGroupMembers(group: String) {
+
+    //部署選択処理
+    public func selectGroupMembers() {
         self.selectedMembers.removeAll()
-        self.selectedMembers = self.members.filter{ $0.group?.0 == group }
-        for mem in self.selectedMembers {
-            print(mem.name)
+        //選択されている事業部のkeyを取得する
+        let selectedCompanykey = DataManager.sharedInstance.companyInfo.filter { $0.check == "Yes" }.map { $0.key }
+        //選択されている部署のkeyを取得する
+        let selectedGroupKey = DataManager.sharedInstance.groupInfo.filter { $0.check == "Yes" }.map { $0.key }
+        var selectedMember: [String: Member] = [:]
+        //選択された事業部
+        let companyMember = DataManager.sharedInstance.members.filter {selectedCompanykey.contains(($0.company?.code)!)}
+        //
+        let groupMember = DataManager.sharedInstance.members.filter { selectedGroupKey.contains(($0.group?.code)!)}
+
+        //事業部
+        for member in companyMember {
+            selectedMember[member.key!] = member
+        }
+        for member in groupMember {
+            selectedMember[member.key!] = member
+        }
+        for member in selectedMember {
+            self.selectedMembers.append(member.value)
+        }
+        if self.selectedMembers.count == 0 {
+            self.selectedMembers = self.members
         }
     }
 }
