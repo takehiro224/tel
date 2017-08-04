@@ -24,9 +24,6 @@ class MemberDetailViewController: UIViewController {
     @IBOutlet weak var kana: UILabel!
     @IBOutlet weak var name: UILabel!
 
-    //処理対象メンバー
-    var memberInfo: (member: Member, indexPathRow: Int)!
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.uiInit()
@@ -35,16 +32,17 @@ class MemberDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //一覧から選択されたデータを取得する
-        guard let mem = DataManager.sharedInstance.memberInfo else {
+        guard let _ = DataManager.sharedInstance.memberInfo else {
             return
         }
-        self.memberInfo = mem
+        // 画像設定
+        photo.image = DataManager.sharedInstance.memberInfo!.member.image
         //名前設定
-        name.text = memberInfo.member.name
+        name.text = DataManager.sharedInstance.memberInfo!.member.name
         //カナ設定
-        kana.text = memberInfo.member.kana
+        kana.text = DataManager.sharedInstance.memberInfo!.member.kana
         //電話番号設定
-        if memberInfo.member.internalPhoneNumber == nil || memberInfo.member.internalPhoneNumber!.characters.count < 1 {
+        if DataManager.sharedInstance.memberInfo!.member.internalPhoneNumber == nil || DataManager.sharedInstance.memberInfo!.member.internalPhoneNumber!.characters.count < 1 {
             callButton.isEnabled = false
             callButton.backgroundColor = UIColor.lightGray
         }
@@ -66,14 +64,14 @@ class MemberDetailViewController: UIViewController {
 
     // 編集ボタンタップ時処理(管理者権限)
     @IBAction func editButtonTapped(_ sender: UIBarButtonItem) {
-        self.performSegue(withIdentifier: "PushToEdit", sender: self)
+        //self.performSegue(withIdentifier: "PushConfigToEdit", sender: self)
     }
 
     @IBAction func favoriteButtonTapped(_ sender: UIButton) {
     }
 
     @IBAction func callButtonTapped(_ sender: UIButton) {
-        guard let tel = memberInfo.member.internalPhoneNumber else {
+        guard let tel = DataManager.sharedInstance.memberInfo!.member.internalPhoneNumber else {
             return
         }
         let url = NSURL(string: "tel://\(tel)")!
@@ -117,32 +115,30 @@ extension MemberDetailViewController: UITableViewDataSource {
         switch attribute {
         case .company:
             cell.itemName.text = MemberAttributes.company.itemName
-            cell.itemValue.text = self.memberInfo.0.company?.name
+            cell.itemValue.text = DataManager.sharedInstance.memberInfo!.0.company?.name
         case .group:
             cell.itemName.text = MemberAttributes.group.itemName
-            cell.itemValue.text = self.memberInfo.0.group?.name
+            cell.itemValue.text = DataManager.sharedInstance.memberInfo!.0.group?.name
         case .internalPhoneNumber:
             cell.itemName.text = MemberAttributes.internalPhoneNumber.itemName
-            cell.itemValue.text = self.memberInfo.0.internalPhoneNumber
+            cell.itemValue.text = DataManager.sharedInstance.memberInfo!.0.internalPhoneNumber
         case .externalPhoneNumber:
             cell.itemName.text = MemberAttributes.externalPhoneNumber.itemName
-            cell.itemValue.text = self.memberInfo.0.externalPhoneNumber
+            cell.itemValue.text = DataManager.sharedInstance.memberInfo!.0.externalPhoneNumber
         case .sheetPhoneNumber:
             cell.itemName.text = MemberAttributes.sheetPhoneNumber.itemName
-            cell.itemValue.text = self.memberInfo.0.sheetPhoneNumber
+            cell.itemValue.text = DataManager.sharedInstance.memberInfo!.0.sheetPhoneNumber
         case .shortMailAddress:
             cell.itemName.text = MemberAttributes.shortMailAddress.itemName
-            cell.itemValue.text = self.memberInfo.0.shortMailAddress
+            cell.itemValue.text = DataManager.sharedInstance.memberInfo!.0.shortMailAddress
         case .emailAddress:
             cell.itemName.text = MemberAttributes.emailAddress.itemName
-            cell.itemValue.text = self.memberInfo.0.emailAddress
+            cell.itemValue.text = DataManager.sharedInstance.memberInfo!.0.emailAddress
         default:
             break
         }
-
         return cell
     }
-
 }
 
 // MARK: - UITableViewDelegate

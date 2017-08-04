@@ -13,6 +13,8 @@ class MemberListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
+    var loadDataObserver: NSObjectProtocol? = nil
+
     //Databaseのルート
     let ref = Database.database().reference()
 
@@ -32,7 +34,12 @@ class MemberListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         DataManager.sharedInstance.memberInfo = nil
+        // 部署選択処理後表示のため
         tableView.reloadData()
+        loadDataObserver = NotificationCenter.default.addObserver(
+        forName: .imageLoadComplete, object: nil, queue: nil) { notification -> Void in
+            self.tableView.reloadData()
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -40,6 +47,7 @@ class MemberListViewController: UIViewController {
         //画面が非表示になった際にデータをクリアする
         ref.removeAllObservers()
         member = nil
+        NotificationCenter.default.removeObserver(loadDataObserver!)
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,13 +56,16 @@ class MemberListViewController: UIViewController {
 
     //追加ボタンタップ処理
     @IBAction func addButtonTapped(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: "toRegister", sender: self)
+        //新規登録判定のため処理対象を初期化
+        DataManager.sharedInstance.memberInfo = nil
+        //performSegue(withIdentifier: "PushConfigToAdd", sender: self)
     }
 
     //部署選択ボタン処理
     @IBAction func selectGroupButtonTapped(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "PushGroupSelect", sender: self)
     }
+
     //Firebase Databaseからデータを読み込む
     private func read() {
         //eventTypeを「.value」にすることで何かしらの変化があった時に実行される
@@ -78,7 +89,7 @@ class MemberListViewController: UIViewController {
         }
     }
 
-    //timestampで保存されている時間を年月日の表示形式に変更する
+    // timestampで保存されている時間を年月日の表示形式に変更する
     func getDate(number: TimeInterval) -> String {
         let date = Date(timeIntervalSince1970: number)
         let formatter = DateFormatter()
@@ -86,26 +97,26 @@ class MemberListViewController: UIViewController {
         return formatter.string(from: date)
     }
 
-    //FireBase, 内部データからの削除
+    // FireBase, 内部データからの削除
     fileprivate func delete(deleteIndexPath indexPath: IndexPath) {
-        //Firebaseデータ削除処理
+        // Firebaseデータ削除処理
         ref.child((Auth.auth().currentUser?.uid)!)
             .child(DataManager.sharedInstance.selectedMembers[indexPath.row].key!)
             .removeValue()
-        //内部データ削除処理
+        // 内部データ削除処理
     }
 
-    //MARK: - Navigation
+    // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PushMemberDetail" {
-            //一般
+            // 一般
         } else {
-            //新規登録
+            // 新規登録
         }
     }
 }
 
-//MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource
 extension MemberListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -116,42 +127,34 @@ extension MemberListViewController: UITableViewDataSource {
         guard let cell = self.tableView.dequeueReusableCell(withIdentifier: "MemberListItem") as? MemberListTableViewCell else {
             return UITableViewCell()
         }
-        //セルに表示するメンバーを取り出す
+        // セルに表示するメンバーを取り出す
         let member = DataManager.sharedInstance.selectedMembers[indexPath.row]
-        //名前を取り出す
-        cell.name.text = member.name
-        cell.status.text = member.status
-        cell.company.text = member.company?.name
-        cell.group.text = member.group?.name
+        //
+        cell.member = member
         return cell
     }
 }
 
-//MARK: - UITableViewDelegate
+// MARK: - UITableViewDelegate
 extension MemberListViewController: UITableViewDelegate {
 
-    //セルタップ処理
+    // セルタップ処理
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         DataManager.sharedInstance.choiceMember(indexPath)
-        //テーブルの選択状態を解除
+        // テーブルの選択状態を解除
         tableView.deselectRow(at: indexPath, animated: true)
         self.performSegue(withIdentifier: "PushMemberDetail", sender: self)
     }
 
-    //セルの編集可否
+    // セルの編集可否
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
 
-    //削除処理
+    // 削除処理
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             self.delete(deleteIndexPath: indexPath)
         }
     }
 }
-
-
-
-
-

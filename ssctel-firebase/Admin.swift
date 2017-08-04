@@ -12,44 +12,44 @@ import Firebase
 
 public struct QueryCondition {
 
-    public static func queryParams(textFieldsData: [String: UITextField]) -> [AnyHashable : Any] {
+    public static func queryParams() -> [AnyHashable : Any] {
         var params = [AnyHashable : Any]()
         //user
         params["user"] = (Auth.auth().currentUser?.uid)!
         //氏名
-        if let name = textFieldsData[MemberAttributes.name.rawValue]?.text {
+        if let name = DataManager.sharedInstance.memberInfo?.member.name {
             params["name"] = name
         }
         //フリカナ
-        if let kana = textFieldsData[MemberAttributes.kana.rawValue]?.text {
+        if let kana = DataManager.sharedInstance.memberInfo?.member.kana {
             params["kana"] = kana
         }
         //事業部
-        if let company = textFieldsData[MemberAttributes.company.rawValue]?.text {
-            params["company"] = company
+        if let company = DataManager.sharedInstance.memberInfo?.member.company {
+            params["company"] = company.code
         }
         //部署
-        if let group = textFieldsData[MemberAttributes.group.rawValue]?.text {
-            params["group"] = group
+        if let group = DataManager.sharedInstance.memberInfo?.member.group {
+            params["group"] = group.code
         }
         //携帯内線番号
-        if let internalPhoneNumber = textFieldsData[MemberAttributes.internalPhoneNumber.rawValue]?.text {
+        if let internalPhoneNumber = DataManager.sharedInstance.memberInfo?.member.internalPhoneNumber {
             params["internalPhoneNumber"] = internalPhoneNumber
         }
         //外線番号
-        if let externalPhoneNumber = textFieldsData[MemberAttributes.externalPhoneNumber.rawValue]?.text {
+        if let externalPhoneNumber = DataManager.sharedInstance.memberInfo?.member.externalPhoneNumber {
             params["externalPhoneNumber"] = externalPhoneNumber
         }
         //座席内線番号
-        if let sheetPhoneNumber = textFieldsData[MemberAttributes.sheetPhoneNumber.rawValue]?.text {
+        if let sheetPhoneNumber = DataManager.sharedInstance.memberInfo?.member.sheetPhoneNumber {
             params["sheetPhoneNumber"] = sheetPhoneNumber
         }
         //SMS
-        if let shortMailAddress = textFieldsData[MemberAttributes.shortMailAddress.rawValue]?.text {
+        if let shortMailAddress = DataManager.sharedInstance.memberInfo?.member.shortMailAddress {
             params["shortMailAddress"] = shortMailAddress
         }
         //E-Mail
-        if let emailAddress = textFieldsData[MemberAttributes.emailAddress.rawValue]?.text {
+        if let emailAddress = DataManager.sharedInstance.memberInfo?.member.emailAddress {
             params["emailAddress"] = emailAddress
         }
         params["date"] = ServerValue.timestamp()

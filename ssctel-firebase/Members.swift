@@ -9,6 +9,11 @@
 import Foundation
 import Firebase
 
+public extension Notification.Name {
+    // 読み込み完了Notification
+    public static let imageLoadComplete = Notification.Name("ImageLoadComplete")
+}
+
 public enum MemberAttributes: String {
     case name
     case kana
@@ -42,35 +47,73 @@ public enum MemberAttributes: String {
             return "Mail"
         }
     }
+
+    var itemNumber: Int {
+        switch self {
+        case .name:
+            return 0
+        case .kana:
+            return 1
+        case .company:
+            return 2
+        case .group:
+            return 3
+        case .internalPhoneNumber:
+            return 4
+        case .externalPhoneNumber:
+            return 5
+        case .sheetPhoneNumber:
+            return 6
+        case .shortMailAddress:
+            return 7
+        case .emailAddress:
+            return 8
+        }
+    }
+
 }
 
-public let attributes: [MemberAttributes] = [.name, .kana, .company, .group, .internalPhoneNumber, .externalPhoneNumber, .sheetPhoneNumber, .shortMailAddress, .emailAddress]
+// 個人設定項目
+public let attributes: [MemberAttributes] = [
+    .name,
+    .kana,
+    .company,
+    .group,
+    .internalPhoneNumber,
+    .externalPhoneNumber,
+    .sheetPhoneNumber,
+    .shortMailAddress,
+    .emailAddress
+]
 
-//MARK: - 従業員データ
+public let storageRef = Storage.storage().reference(forURL: "gs://ssc-tel.appspot.com")
+
+// MARK: - 従業員データ
 public struct Member: CustomStringConvertible {
-
-    //uid
+    // uid
     var key: String? = nil
-    //名前
+    // 名前
     var name: String? = nil
-    //kana
+    // kana
     var kana: String? = nil
-    //カンパニー名
+    // カンパニー名
     var company: (code: String, name: String)? = nil
-    //グループ名
+    // グループ名
     var group: (code: String, name: String)? = nil
-    //携帯内線
+    // 携帯内線
     var internalPhoneNumber: String? = nil
-    //外線
+    // 外線
     var externalPhoneNumber: String? = nil
-    //座席内線
+    // 座席内線
     var sheetPhoneNumber: String? = nil
-    //SMS
+    // SMS
     var shortMailAddress: String? = nil
-    //e-Mail
+    // e-Mail
     var emailAddress: String? = nil
-    //ステータス
+    // ステータス
     var status: String? = nil
+    // 画像
+    var image: UIImage? = nil
 
     // MARK: - CustomStringConvertible
     public var description: String {
@@ -98,6 +141,9 @@ class DataManager {
 
     //Databaseのルート
     let ref = Database.database().reference()
+
+    // ログインユーザー情報
+    var loginUser: Member? = nil
     
     //処理対象メンバー
     var memberInfo: (member: Member, indexPathRow: Int)?
@@ -111,10 +157,12 @@ class DataManager {
     //事業部情報
     var companyNames: [String: String] = [:] {
         didSet {
+            // セットされたら関連データを初期化
             companyKeys.removeAll()
             companyValues.removeAll()
-            companyKeys = [String](self.companyNames.keys)
-            companyValues = [String](self.companyNames.values)
+
+            companyKeys = [String](self.companyNames.keys).sorted { Int($0)! < Int($1)! }
+            for data in companyKeys { companyValues.append(companyNames[data]!) }
             companyInfo.removeAll()
             for i in 0 ..< companyNames.count {
                 companyInfo.append((key: companyKeys[i], value: companyValues[i], check: "No"))
@@ -124,14 +172,16 @@ class DataManager {
     var companyKeys: [String] = []
     var companyValues: [String] = []
     var companyInfo: [(key: String, value: String, check: String)] = []
-
+    var groupsort: [String] = []
     //部署情報
     var groupNames: [String: String] = [:] {
         didSet {
+            // セットされたら関連データを初期化
             groupKeys.removeAll()
             groupValues.removeAll()
-            groupKeys = [String](self.groupNames.keys)
-            groupValues = [String](self.groupNames.values)
+            // キーと値の格納
+            groupKeys = [String](self.groupNames.keys).sorted { Int($0)! < Int($1)! }
+            for data in groupKeys { groupValues.append(groupNames[data]!) }
             groupInfo.removeAll()
             for i in 0 ..< groupNames.count {
                 groupInfo.append((key: groupKeys[i], value: groupValues[i], check: "No"))
@@ -221,11 +271,33 @@ class DataManager {
             if let email = data["emailAddress"] as? String { member.emailAddress = email }
             // ステータス
             if let status = data["status"] as? String { member.status = status }
-
-            members.append(member)
+            // 画像の取得
+            member.image = UIImage(named: "woman")
+            let fileName = member.key!
+            let imageRef = storageRef.child("images/\(fileName).jpg")
+            imageRef.getData(maxSize: 1 * 1024 * 1024) { (data, error) -> Void in
+                if error == nil {
+                    if data != nil {
+                        member.image = UIImage(data: data!)
+                    }
+                } else {
+//                    print("error!!!!!!!!")
+                }
+                self.members.append(member)
+                // ログインユーザー選定
+                if (Auth.auth().currentUser?.uid)! == dataSnapshot.key {
+                    self.loginUser = member
+                }
+                if self.members.count == Int(snapshots.childrenCount) {
+                    // 従業員一覧をソード
+                    self.members = self.members.sorted { $0.kana! < $1.kana! }
+                    // 使用する従業員一覧を格納
+                    self.selectedMembers = self.members
+                    // 読み込み終了を通知する
+                    NotificationCenter.default.post(name: .imageLoadComplete, object: nil)
+                }
+            }
         }
-        members = members.sorted { $0.kana! < $1.kana! }
-        selectedMembers = members
     }
 
     //メンバーを選択
@@ -261,9 +333,28 @@ class DataManager {
         }
         for member in selectedMember {
             self.selectedMembers.append(member.value)
+            self.selectedMembers = self.selectedMembers.sorted { $0.kana! < $1.kana! }
         }
-        if self.selectedMembers.count == 0 {
-            self.selectedMembers = self.members
+    }
+
+    public func clearSelectGroup() {
+        for i in 0 ..< DataManager.sharedInstance.companyInfo.count {
+            DataManager.sharedInstance.companyInfo[i].check = "Yes"
+        }
+        for i in 0 ..< DataManager.sharedInstance.groupInfo.count {
+            DataManager.sharedInstance.groupInfo[i].check = "Yes"
+        }
+    }
+
+    public func unSelectCompany() {
+        for i in 0 ..< DataManager.sharedInstance.companyInfo.count {
+            DataManager.sharedInstance.companyInfo[i].check = "No"
+        }
+    }
+
+    public func unSelectGroup() {
+        for i in 0 ..< DataManager.sharedInstance.groupInfo.count {
+            DataManager.sharedInstance.groupInfo[i].check = "No"
         }
     }
 }

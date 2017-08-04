@@ -10,15 +10,19 @@ import UIKit
 
 class GroupSelectViewController: UIViewController {
 
+    //テーブルビュー
     @IBOutlet weak var tableView: UITableView!
+    //決定ボタン
     @IBOutlet weak var allSelectButton: UIBarButtonItem!
-
+    //全選択フラグ
     var allSelectFlag = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.allowsMultipleSelection = true
-        allSelectFlag = false
+        allSelectFlag = true
+        allSelectButton.title = "全解除"
+        DataManager.sharedInstance.clearSelectGroup()
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,12 +32,6 @@ class GroupSelectViewController: UIViewController {
     // MARK: - IBAction
     //キャンセルボタンタップ処理
     @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
-        for i in 0 ..< DataManager.sharedInstance.companyInfo.count {
-            DataManager.sharedInstance.companyInfo[i].check = "No"
-        }
-        for i in 0 ..< DataManager.sharedInstance.groupInfo.count {
-            DataManager.sharedInstance.groupInfo[i].check = "No"
-        }
         allSelectFlag = false
         navigationController?.popViewController(animated: true)
     }
@@ -65,6 +63,7 @@ class GroupSelectViewController: UIViewController {
     //完了ボタンタップ処理
     @IBAction func doneButtonTapped(_ sender: UIBarButtonItem) {
         DataManager.sharedInstance.selectGroupMembers()
+        allSelectFlag = false
         navigationController?.popViewController(animated: true)
     }
 }
@@ -111,7 +110,6 @@ extension GroupSelectViewController: UITableViewDataSource {
             cell.groupNameLabel.text = DataManager.sharedInstance.groupValues[indexPath.row]
             cell.accessoryType = DataManager.sharedInstance.groupInfo[indexPath.row].check == "Yes" ? .checkmark : .none
         }
-        
         return cell
     }
 }

@@ -18,6 +18,17 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let env = ProcessInfo.processInfo.environment
+        #if CUSTOM
+            if let value = env["custom"] {
+                print(value)
+            }
+        #elseif DEBUG
+            if let value = env["debug"] {
+                print(value)
+            }
+        #endif
+
         emailTextField.delegate = self
         emailTextField.keyboardType = .alphabet
         emailTextField.text = "tkwatanabe@shinwart.co.jp"
@@ -31,9 +42,9 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
 
-    //MARK: - アプリケーションロジック
+    // MARK: - アプリケーションロジック
 
-    //ログイン失敗処理
+    // ログイン失敗処理
     fileprivate func loginFailed() {
         let alert = UIAlertController(title: "失敗", message: "ログインに失敗しました", preferredStyle: .alert)
         alert.addAction(
@@ -42,14 +53,15 @@ class LoginViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
 
-    //ログインボタンタップ処理
+    // ログインボタンタップ処理
     @IBAction func loginButtonTapped(_ sender: UIButton) {
         guard let email = emailTextField.text, let password = passwordTextField.text else {
             return
         }
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
             if error == nil {
-                if let _ = user {
+                if let user = user {
+                    print(user.uid)
                     self.performSegue(withIdentifier: "toContents", sender: self)
                 }
             } else {
@@ -62,10 +74,10 @@ class LoginViewController: UIViewController {
 
 }
 
-//MARK: - UITextFieldDelegate
+// MARK: - UITextFieldDelegate
 extension LoginViewController: UITextFieldDelegate {
 
-    //エンター処理
+    // エンター処理
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

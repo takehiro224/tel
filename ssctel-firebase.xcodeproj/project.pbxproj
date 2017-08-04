@@ -26,8 +26,14 @@
 		F935C3E01F15DF410034F948 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F935C3DF1F15DF410034F948 /* LoginViewController.swift */; };
 		F935C3E11F15DF410034F948 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F935C3DF1F15DF410034F948 /* LoginViewController.swift */; };
 		F935C3E71F160FD30034F948 /* MemberRegistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F935C3E61F160FD30034F948 /* MemberRegistViewController.swift */; };
+		F9361F2C1F2F0692002F05EF /* GroupChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9361F2B1F2F0692002F05EF /* GroupChoiceViewController.swift */; };
+		F9361F2E1F2F06E7002F05EF /* GroupChoiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9361F2D1F2F06E7002F05EF /* GroupChoiceTableViewCell.swift */; };
+		F9365ED81F32AFA300EC5080 /* ConfigTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9365ED71F32AFA300EC5080 /* ConfigTableViewCell.swift */; };
+		F9643FBE1F2067EC00DDC6B8 /* GroupSelectItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9643FBD1F2067EC00DDC6B8 /* GroupSelectItemTableViewCell.swift */; };
+		F9643FC01F20680C00DDC6B8 /* GroupSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9643FBF1F20680C00DDC6B8 /* GroupSelectViewController.swift */; };
 		F9794DF01F186768002BF323 /* MemberDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9794DEF1F186768002BF323 /* MemberDetailViewController.swift */; };
 		F9794DF21F1876BB002BF323 /* MemberDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9794DF11F1876BB002BF323 /* MemberDetailTableViewCell.swift */; };
+		F9B37F371F1F5C7D006918CB /* Admin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B37F361F1F5C7D006918CB /* Admin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,7 +50,9 @@
 		024EB205CD310BE0FFB2FC5F /* Pods-ssctel-firebaseTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ssctel-firebaseTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ssctel-firebaseTests/Pods-ssctel-firebaseTests.release.xcconfig"; sourceTree = "<group>"; };
 		07A60014EE1B40C22755F5DA /* Pods-ssctel-firebaseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ssctel-firebaseTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ssctel-firebaseTests/Pods-ssctel-firebaseTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3E513E42F44EB0C1160BAE1B /* Pods-ssctel-firebase.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ssctel-firebase.release.xcconfig"; path = "Pods/Target Support Files/Pods-ssctel-firebase/Pods-ssctel-firebase.release.xcconfig"; sourceTree = "<group>"; };
+		64670C2E5B2A300DEBA43250 /* Pods-ssctel-firebase.custom.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ssctel-firebase.custom.xcconfig"; path = "Pods/Target Support Files/Pods-ssctel-firebase/Pods-ssctel-firebase.custom.xcconfig"; sourceTree = "<group>"; };
 		8DC9E8FF9922E4368F863B8B /* Pods-ssctel-firebase.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ssctel-firebase.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ssctel-firebase/Pods-ssctel-firebase.debug.xcconfig"; sourceTree = "<group>"; };
+		8F3D61453F7C64CAA72EA79D /* Pods-ssctel-firebaseTests.custom.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ssctel-firebaseTests.custom.xcconfig"; path = "Pods/Target Support Files/Pods-ssctel-firebaseTests/Pods-ssctel-firebaseTests.custom.xcconfig"; sourceTree = "<group>"; };
 		A7BC0026CCA239889F5CA956 /* Pods_ssctel_firebaseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ssctel_firebaseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D730567A0E36AAA956C66C35 /* Pods_ssctel_firebase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ssctel_firebase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F922C8991F17313C00D227A5 /* ConfigViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigViewController.swift; sourceTree = "<group>"; };
@@ -64,8 +72,14 @@
 		F935C3D91F15DBA00034F948 /* MemberRegistTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberRegistTableViewCell.swift; sourceTree = "<group>"; };
 		F935C3DF1F15DF410034F948 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		F935C3E61F160FD30034F948 /* MemberRegistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberRegistViewController.swift; sourceTree = "<group>"; };
+		F9361F2B1F2F0692002F05EF /* GroupChoiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChoiceViewController.swift; sourceTree = "<group>"; };
+		F9361F2D1F2F06E7002F05EF /* GroupChoiceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChoiceTableViewCell.swift; sourceTree = "<group>"; };
+		F9365ED71F32AFA300EC5080 /* ConfigTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigTableViewCell.swift; sourceTree = "<group>"; };
+		F9643FBD1F2067EC00DDC6B8 /* GroupSelectItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupSelectItemTableViewCell.swift; sourceTree = "<group>"; };
+		F9643FBF1F20680C00DDC6B8 /* GroupSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupSelectViewController.swift; sourceTree = "<group>"; };
 		F9794DEF1F186768002BF323 /* MemberDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberDetailViewController.swift; sourceTree = "<group>"; };
 		F9794DF11F1876BB002BF323 /* MemberDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberDetailTableViewCell.swift; sourceTree = "<group>"; };
+		F9B37F361F1F5C7D006918CB /* Admin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Admin.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +109,8 @@
 				3E513E42F44EB0C1160BAE1B /* Pods-ssctel-firebase.release.xcconfig */,
 				07A60014EE1B40C22755F5DA /* Pods-ssctel-firebaseTests.debug.xcconfig */,
 				024EB205CD310BE0FFB2FC5F /* Pods-ssctel-firebaseTests.release.xcconfig */,
+				64670C2E5B2A300DEBA43250 /* Pods-ssctel-firebase.custom.xcconfig */,
+				8F3D61453F7C64CAA72EA79D /* Pods-ssctel-firebaseTests.custom.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -112,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				F922C8991F17313C00D227A5 /* ConfigViewController.swift */,
+				F9365ED71F32AFA300EC5080 /* ConfigTableViewCell.swift */,
 			);
 			name = Config;
 			sourceTree = "<group>";
@@ -139,6 +156,7 @@
 		F935C3B01F15BC2C0034F948 /* ssctel-firebase */ = {
 			isa = PBXGroup;
 			children = (
+				F9643FBC1F20679200DDC6B8 /* Select */,
 				F922C8981F17312400D227A5 /* Config */,
 				F935C3D81F15DB280034F948 /* Common */,
 				F935C3D41F15C29B0034F948 /* Contact */,
@@ -179,8 +197,20 @@
 			isa = PBXGroup;
 			children = (
 				F922C89B1F1751B600D227A5 /* Members.swift */,
+				F9B37F361F1F5C7D006918CB /* Admin.swift */,
 			);
 			name = Common;
+			sourceTree = "<group>";
+		};
+		F9643FBC1F20679200DDC6B8 /* Select */ = {
+			isa = PBXGroup;
+			children = (
+				F9361F2B1F2F0692002F05EF /* GroupChoiceViewController.swift */,
+				F9361F2D1F2F06E7002F05EF /* GroupChoiceTableViewCell.swift */,
+				F9643FBD1F2067EC00DDC6B8 /* GroupSelectItemTableViewCell.swift */,
+				F9643FBF1F20680C00DDC6B8 /* GroupSelectViewController.swift */,
+			);
+			name = Select;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -390,15 +420,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				F935C3E01F15DF410034F948 /* LoginViewController.swift in Sources */,
+				F9361F2C1F2F0692002F05EF /* GroupChoiceViewController.swift in Sources */,
 				F9794DF01F186768002BF323 /* MemberDetailViewController.swift in Sources */,
 				F935C3DA1F15DBA00034F948 /* MemberRegistTableViewCell.swift in Sources */,
 				F935C3B41F15BC2C0034F948 /* MemberListViewController.swift in Sources */,
+				F9643FBE1F2067EC00DDC6B8 /* GroupSelectItemTableViewCell.swift in Sources */,
+				F9B37F371F1F5C7D006918CB /* Admin.swift in Sources */,
 				F922C89C1F1751B600D227A5 /* Members.swift in Sources */,
 				F9794DF21F1876BB002BF323 /* MemberDetailTableViewCell.swift in Sources */,
 				F935C3B21F15BC2C0034F948 /* AppDelegate.swift in Sources */,
 				F922C89A1F17313C00D227A5 /* ConfigViewController.swift in Sources */,
 				F935C3E71F160FD30034F948 /* MemberRegistViewController.swift in Sources */,
 				F935C3D61F15C3D50034F948 /* MemberListTableViewCell.swift in Sources */,
+				F9365ED81F32AFA300EC5080 /* ConfigTableViewCell.swift in Sources */,
+				F9361F2E1F2F06E7002F05EF /* GroupChoiceTableViewCell.swift in Sources */,
+				F9643FC01F20680C00DDC6B8 /* GroupSelectViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,11 +579,13 @@
 			baseConfigurationReference = 8DC9E8FF9922E4368F863B8B /* Pods-ssctel-firebase.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 38HYQS5SV4;
 				INFOPLIST_FILE = "ssctel-firebase/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.shinwart.ssctel-firebase";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -558,11 +596,13 @@
 			baseConfigurationReference = 3E513E42F44EB0C1160BAE1B /* Pods-ssctel-firebase.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 38HYQS5SV4;
 				INFOPLIST_FILE = "ssctel-firebase/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.shinwart.ssctel-firebase";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
